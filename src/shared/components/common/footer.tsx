@@ -2,37 +2,37 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 
 const linkColumns: ReadonlyArray<{
-  label?: string;
-  items: ReadonlyArray<string>;
+  label: string;
+  items: ReadonlyArray<{ label: string; href: string }>;
 }> = [
   {
-    label: "Antigane",
+    label: "Pages",
     items: [
-      "Homepage",
-      "About",
-      "Blog",
-      "Careers",
-      "Legal",
-      "Privacy",
-      "Terms",
-      "Help",
+      { label: "Homepage", href: "/#main-content" },
+      { label: "Products", href: "/#products" },
+      { label: "Our Focus", href: "/#focus" },
+      { label: "Research", href: "/#research" },
     ],
   },
   {
-    label: "Templates",
+    label: "Products",
     items: [
-      "Wirefram",
-      "Marketing",
-      "Dashboard",
-      "Landing",
-      "Docs",
-      "Portfolio",
-      "Commerce",
-      "App",
+      { label: "Peridot Vault", href: "https://peridotvault.com" },
+      { label: "Peridot Wallet", href: "/#products" },
+      { label: "Peridot Code", href: "/#products" },
+      { label: "MainGame", href: "/#products" },
     ],
   },
   {
-    items: ["Founders", "Designers", "Engineers", "Agencies"],
+    label: "Company",
+    items: [
+      { label: "About", href: "#" },
+      { label: "Blog", href: "#" },
+      { label: "Careers", href: "#" },
+      { label: "License", href: "#" },
+      { label: "Privacy", href: "#" },
+      { label: "Terms", href: "#" },
+    ],
   },
 ];
 
@@ -55,28 +55,19 @@ export function Footer(): ReactNode {
             aria-label="Footer"
             className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:gap-x-12"
           >
-            {linkColumns.map((column, i) => (
-              <div key={column.label ?? `col-${i}`}>
-                {column.label ? (
-                  <p className="mb-5 text-sm text-neutral-500 dark:text-neutral-500">
-                    {column.label}
-                  </p>
-                ) : (
-                  <p
-                    className="mb-5 text-sm text-neutral-500 dark:text-neutral-500"
-                    aria-hidden="true"
-                  >
-                    &nbsp;
-                  </p>
-                )}
+            {linkColumns.map((column) => (
+              <div key={column.label}>
+                <p className="mb-5 text-sm text-neutral-500 dark:text-neutral-500">
+                  {column.label}
+                </p>
                 <ul className="space-y-3">
                   {column.items.map((item) => (
-                    <li key={item}>
+                    <li key={item.label}>
                       <a
-                        href="#"
+                        href={item.href}
                         className="focus-ring rounded-sm text-sm text-neutral-100 transition-colors hover:text-white dark:text-neutral-900 dark:hover:text-black"
                       >
-                        {item}
+                        {item.label}
                       </a>
                     </li>
                   ))}

@@ -1,25 +1,30 @@
 import type { Metadata } from "next";
 
 export const siteConfig = {
-  name: "Wireframe Template",
+  name: "Antigane",
   description:
-    "A baseline for products that move quickly. Wireframe-stage scaffolding for teams that ship before the brand lands.",
-  url: "https://example.com",
+    "Antigane builds products across game distribution, blockchain infrastructure, and AI developer tools — a multi-product ecosystem for creators, players, and builders.",
+  url: "https://antigane.com",
   ogImage: "/og-image.png",
-  creator: "@yourhandle",
+  creator: "@antiganehq",
   authors: [
     {
-      name: "Your Name",
-      url: "https://example.com",
+      name: "Antigane",
+      url: "https://antigane.com",
     },
   ],
   keywords: [
-    "landing page",
-    "template",
-    "Next.js",
-    "React",
-    "Tailwind CSS",
-    "TypeScript",
+    "antigane",
+    "game distribution",
+    "blockchain",
+    "ai developer tools",
+    "peridot vault",
+    "peridot wallet",
+    "peridot code",
+    "maingame",
+    "web3 gaming",
+    "creator tools",
+    "gaming platform",
   ],
 } as const;
 

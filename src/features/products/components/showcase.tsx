@@ -135,6 +135,7 @@ export function Showcase(): ReactNode {
 
   return (
     <section
+      id="products"
       aria-labelledby={headingId}
       className="relative border-b border-border"
     >

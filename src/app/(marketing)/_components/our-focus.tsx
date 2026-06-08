@@ -2,7 +2,7 @@ import { SectionCorners } from "@/shared/components/ui/section-corners";
 
 export default function OurFocus() {
   return (
-    <section className="relative border-b border-border p-6 sm:p-10 lg:p-14">
+    <section id="focus" className="relative border-b border-border p-6 sm:p-10 lg:p-14">
       <h2 className="overflow-hidden text-ellipsis whitespace-nowrap text-2xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-3xl lg:text-[2.5rem]">
         What We Focus On
       </h2>
