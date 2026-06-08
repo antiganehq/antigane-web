@@ -4,22 +4,22 @@ export default function OurFocus() {
   return (
     <section className="relative border-b border-border p-6 sm:p-10 lg:p-14">
       <h2 className="overflow-hidden text-ellipsis whitespace-nowrap text-2xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-3xl lg:text-[2.5rem]">
-        A scaffold, not a finished product
+        What We Focus On
       </h2>
 
       <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3 lg:mt-16 lg:gap-6">
         {[
           {
-            title: "Skip the blank canvas",
-            body: "Routing, tokens, and layout primitives are wired before you write a line of feature code.",
+            title: "Game",
+            body: "Building platforms that help games get discovered, distributed, and grown by players.",
           },
           {
-            title: "Designed to be overwritten",
-            body: "Every component is a placeholder you can tear out the moment your real system arrives.",
+            title: "Blockchain",
+            body: "Creating wallet, licensing, and payment infrastructure for digital products.",
           },
           {
-            title: "Stays out of your way",
-            body: "No proprietary abstractions, no hidden magic — just the conventions your team already uses.",
+            title: "Artificial Intelligence",
+            body: "Developing intelligent tools that help creators and developers build faster.",
           },
         ].map((card, i) => (
           <article

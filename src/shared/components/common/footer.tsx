@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 const linkColumns: ReadonlyArray<{
@@ -97,8 +98,12 @@ export function Footer(): ReactNode {
 
         <div className="mt-16 flex flex-col items-start justify-between gap-6 pt-8 sm:flex-row sm:items-center lg:mt-24">
           <div className="flex items-center gap-2">
-            <span
-              className="h-5 w-5 shrink-0 bg-neutral-100! dark:bg-neutral-900!"
+            <Image
+              width={20}
+              height={20}
+              src={"/logo-white-nobg.png"}
+              alt="Logo Antigane"
+              className="h-5 w-5 shrink-0 dark:invert"
               aria-hidden="true"
             />
             <span className="text-lg font-semibold leading-none tracking-tight">

@@ -36,34 +36,28 @@ type ShowcaseCard = {
 
 const CARDS: ReadonlyArray<ShowcaseCard> = [
   {
-    id: "flagship",
-    title: "Flagship\nLarge Cap",
+    id: "peridot-vault",
+    title: "Peridot Vault",
     Icon: TrendingUp,
-    body: "A long-horizon position in resilient, high-quality public companies. Built for compounding without the noise of short-term swings.",
+    body: "A game distribution platform where players discover, access, and help grow the games they love through a more connected gaming ecosystem.",
   },
   {
-    id: "opportunities",
-    title: "Opportunities\nSmall Cap",
+    id: "peridot-wallet",
+    title: "Peridot Wallet",
     Icon: Search,
-    body: "Concentrated exposure to under-the-radar names with asymmetric upside. Researched in-house, screened for conviction, sized with discipline.",
+    body: "A simple wallet experience built for gaming, digital access, and blockchain-powered applications without unnecessary complexity.",
   },
   {
-    id: "offshore",
-    title: "Offshore\nGlobal Equity",
+    id: "peridot-code",
+    title: "Peridot Code",
     Icon: Layers,
-    body: "International equity exposure across developed and emerging markets, balanced for currency, region, and sector concentration.",
+    body: "An AI-powered developer tool that helps builders create software, apps, and games faster with flexible model access and coding agents.",
   },
   {
-    id: "automated",
-    title: "Automated\nFixed Income",
+    id: "maingame",
+    title: "MainGame",
     Icon: Boxes,
-    body: "A rules-based bond ladder that rebalances itself as rates move. Designed for steady carry without the friction of manual trading.",
-  },
-  {
-    id: "ventures",
-    title: "Ventures\nPrivate Markets",
-    Icon: Sparkles,
-    body: "Curated access to late-stage private deals previously walled off to institutions. One subscription, one portfolio, one set of fees.",
+    body: "A creator and gaming-focused product designed to support game discovery, community growth, and player-driven engagement.",
   },
 ];
 
@@ -150,25 +144,10 @@ export function Showcase(): ReactNode {
             id={headingId}
             className="text-4xl font-medium leading-[1.05] tracking-tighter text-foreground sm:text-5xl lg:text-[3.5rem] xl:text-[4rem]"
           >
-            Built lean,
+            Products Built
             <br />
-            shipped fast,
-            <br />
-            <span className="text-muted-foreground">ready for your brand</span>
+            <span className="text-muted-foreground">Under Antigane</span>
           </h2>
-          <p className="mt-10 max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Each surface is intentionally generic so your brand drops in without
-            resistance.
-          </p>
-          <div className="mt-10">
-            <a
-              href="#offerings"
-              className="focus-ring inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-background transition-opacity hover:opacity-90"
-            >
-              See Our Designs
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
         </div>
 
         <div className="relative flex flex-col overflow-hidden">

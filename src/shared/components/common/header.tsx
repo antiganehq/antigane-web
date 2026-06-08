@@ -1,13 +1,14 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 
 const primaryLinks = [
-  { label: "Layouts", href: "#layouts" },
-  { label: "System", href: "#system" },
-  { label: "Docs", href: "#docs" },
+  { label: "Products", href: "#products" },
+  { label: "Our Focus", href: "#focus" },
+  { label: "Research", href: "#research" },
 ];
 
 const mobileLinks = [
@@ -29,7 +30,14 @@ function Logo(): ReactNode {
       className="focus-ring enter inline-flex items-center gap-2 rounded-sm text-foreground"
       aria-label="Antigane home"
     >
-      <span className="h-5 w-5 shrink-0 bg-foreground" aria-hidden="true" />
+      <Image
+        width={20}
+        height={20}
+        src={"/logo-white-nobg.png"}
+        alt="Logo Antigane"
+        className="h-5 w-5 shrink-0 invert dark:invert-0"
+        aria-hidden="true"
+      />
       <span className="text-lg font-semibold leading-none tracking-tight">
         Antigane
       </span>
@@ -99,31 +107,31 @@ export function Header(): ReactNode {
         </nav>
 
         <div className="ml-auto hidden items-center gap-4 lg:flex">
-          <Link
+          {/* <Link
             href="#signin"
             style={{ ["--enter-delay" as string]: "260ms" }}
             className="focus-ring enter rounded-full px-2 py-1.5 text-sm font-medium text-foreground transition-colors hover:text-muted-foreground"
           >
             Sign In
-          </Link>
+          </Link> */}
           <Link
-            href="#start"
+            href="peridotvault.com"
             style={{ ["--enter-delay" as string]: "320ms" }}
             className={`focus-ring enter rounded-full px-5 py-2.5 text-sm font-medium text-foreground transition-[background-color] duration-300 ease-out hover:text-muted-foreground ${
               isScrolled ? "bg-transparent" : "bg-muted hover:bg-border"
             }`}
           >
-            Our Products
+            peridotvault.com
           </Link>
         </div>
 
         <div className="ml-auto flex items-center gap-2 lg:hidden">
           <Link
-            href="#start"
+            href="peridotvault.com"
             style={{ ["--enter-delay" as string]: "120ms" }}
             className="focus-ring enter rounded-full bg-muted px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-border"
           >
-            Our Products
+            peridotvault.com
           </Link>
           <button
             type="button"

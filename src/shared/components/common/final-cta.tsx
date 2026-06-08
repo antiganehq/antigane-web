@@ -8,7 +8,7 @@ export function FinalCTA(): ReactNode {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,420px)]">
           <div className="flex min-h-80 flex-col justify-center px-8 py-12 sm:px-12 sm:py-16 lg:border-r lg:border-neutral-200 lg:px-14 lg:py-20 dark:lg:border-neutral-800">
             <h2 className="max-w-md text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl lg:text-[2.5rem]">
-              Drop in your brand and ship the next version
+              Multiple products. One ecosystem.
             </h2>
           </div>
 

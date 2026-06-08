@@ -11,23 +11,17 @@ export default function Hero() {
             style={{ ["--enter-delay" as string]: "380ms" }}
             className="enter text-4xl font-medium leading-[1.05] tracking-tighter text-foreground sm:text-5xl lg:text-[4rem] xl:text-[5.5rem]"
           >
-            A baseline for products that move quickly.
+            Building Game, Blockchain, and AI Products.
           </h1>
           <div
             style={{ ["--enter-delay" as string]: "520ms" }}
             className="enter mt-10 flex flex-wrap items-center gap-6"
           >
             <a
-              href="#start"
-              className="focus-ring inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-background transition-opacity hover:opacity-90"
-            >
-              Get Started
-            </a>
-            <a
-              href="#why"
+              href="#products"
               className="focus-ring inline-flex items-center gap-2 rounded-full px-2 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:text-muted-foreground"
             >
-              Learn More
+              Explore Products
               <span
                 className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-foreground"
                 aria-hidden="true"
@@ -52,15 +46,15 @@ export default function Hero() {
             style={{ ["--enter-delay" as string]: "680ms" }}
             className="enter max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg"
           >
-            Frame helps teams lock structure, hierarchy, and flow before color
-            and brand land — so the work ships sooner.
+            Antigane builds products across game distribution, blockchain
+            infrastructure, AI developer tools, and creator-powered discovery.
           </p>
         </div>
         <div className="grid grid-cols-3 px-6 py-10 sm:px-10 lg:px-14">
           {[
-            { label: "Components", value: "120+" },
-            { label: "Avg. Setup", value: "9 min" },
-            { label: "License", value: "Commercial" },
+            { label: "Products", value: "4+" },
+            { label: "Focus Areas", value: "3" },
+            { label: "Commercial Use", value: "Ready" },
           ].map((stat, i) => (
             <div
               key={stat.label}
