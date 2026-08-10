@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "title": "Antigane — Membangun Produk Game, Blockchain & AI",
+    "description": "Temukan Peridot, Peridot ID, dan Live2dev — produk yang dibangun oleh Antigane untuk distribusi game, infrastruktur identitas Web3, dan kampanye game berbasis kreator."
+  },
+  "header": {
+    "logoAria": "Beranda Antigane",
+    "nav": {
+      "products": "Produk",
+      "focus": "Fokus Kami",
+      "research": "Riset"
+    },
+    "homepage": "Beranda",
+    "desk": "Lainnya",
+    "license": "Lisensi",
+    "security": "Keamanan",
+    "privacy": "Privasi",
+    "terms": "Ketentuan",
+    "menu": {
+      "open": "Buka menu navigasi",
+      "close": "Tutup menu navigasi"
+    }
+  },
+  "hero": {
+    "heading": "Membangun Produk Game, Blockchain, dan AI.",
+    "tagline": "Antigane membangun produk di bidang distribusi game, infrastruktur blockchain, alat developer AI, dan penemuan berbasis kreator.",
+    "explore": "Jelajahi Produk",
+    "stats": {
+      "products": "Produk",
+      "focus": "Fokus",
+      "commercialUse": "Penggunaan Komersial",
+      "ready": "Siap"
+    }
+  },
+  "focus": {
+    "title": "Fokus Kami",
+    "game": {
+      "title": "Game",
+      "body": "Membangun platform yang membantu game ditemukan, didistribusikan, dan bertumbuh oleh para pemain."
+    },
+    "blockchain": {
+      "title": "Blockchain",
+      "body": "Menciptakan infrastruktur dompet, lisensi, dan pembayaran untuk produk digital."
+    },
+    "ai": {
+      "title": "Kecerdasan Buatan",
+      "body": "Mengembangkan alat cerdas yang membantu kreator dan developer membangun lebih cepat."
+    }
+  },
+  "products": {
+    "heading": "Produk Dibangun",
+    "subheading": "di Bawah Antigane",
+    "visit": "Kunjungi situs {title}",
+    "peridot": {
+      "title": "Peridot",
+      "body": "Platform distribusi game tempat pemain menemukan, mengakses, dan membantu mengembangkan game favorit mereka melalui ekosistem game yang lebih terhubung."
+    },
+    "peridotId": {
+      "title": "Peridot ID",
+      "body": "Platform identitas terpadu yang memberi setiap produk di ekosistem Peridot satu proses masuk, sesi bersama, dan profil pemain yang mengikuti pemain ke mana pun."
+    },
+    "live2dev": {
+      "title": "Live2dev",
+      "body": "Marketplace kampanye game yang menghubungkan developer game dengan streamer untuk mempromosikan dan mengembangkan game mereka."
+    }
+  },
+  "cta": {
+    "heading": "Banyak produk. Satu ekosistem."
+  },
+  "footer": {
+    "backToTop": "Kembali ke atas",
+    "pages": "Halaman",
+    "homepage": "Beranda",
+    "products": "Produk",
+    "focus": "Fokus Kami",
+    "research": "Riset",
+    "company": "Perusahaan",
+    "about": "Tentang",
+    "blog": "Blog",
+    "careers": "Karier",
+    "license": "Lisensi",
+    "privacy": "Privasi",
+    "terms": "Ketentuan",
+    "talkToTeam": "Hubungi Tim",
+    "copyright": "© {year} Antigane. Seluruh hak cipta dilindungi."
+  }
+}

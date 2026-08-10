@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "title": "Antigane — Building Game, Blockchain & AI Products",
+    "description": "Discover Peridot, Peridot ID, and Live2dev — products built under Antigane for game distribution, Web3 identity infrastructure, and creator-driven game campaigns."
+  },
+  "header": {
+    "logoAria": "Antigane home",
+    "nav": {
+      "products": "Products",
+      "focus": "Our Focus",
+      "research": "Research"
+    },
+    "homepage": "Homepage",
+    "desk": "Desk",
+    "license": "License",
+    "security": "Security",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "menu": {
+      "open": "Open navigation menu",
+      "close": "Close navigation menu"
+    }
+  },
+  "hero": {
+    "heading": "Building Game, Blockchain, and AI Products.",
+    "tagline": "Antigane builds products across game distribution, blockchain infrastructure, AI developer tools, and creator-powered discovery.",
+    "explore": "Explore Products",
+    "stats": {
+      "products": "Products",
+      "focus": "Focus Areas",
+      "commercialUse": "Commercial Use",
+      "ready": "Ready"
+    }
+  },
+  "focus": {
+    "title": "What We Focus On",
+    "game": {
+      "title": "Game",
+      "body": "Building platforms that help games get discovered, distributed, and grown by players."
+    },
+    "blockchain": {
+      "title": "Blockchain",
+      "body": "Creating wallet, licensing, and payment infrastructure for digital products."
+    },
+    "ai": {
+      "title": "Artificial Intelligence",
+      "body": "Developing intelligent tools that help creators and developers build faster."
+    }
+  },
+  "products": {
+    "heading": "Products Built",
+    "subheading": "Under Antigane",
+    "visit": "Visit {title} website",
+    "peridot": {
+      "title": "Peridot",
+      "body": "A game distribution platform where players discover, access, and help grow the games they love through a more connected gaming ecosystem."
+    },
+    "peridotId": {
+      "title": "Peridot ID",
+      "body": "A unified identity platform giving every product in the Peridot ecosystem one sign-in, shared sessions, and player profiles that follow players everywhere."
+    },
+    "live2dev": {
+      "title": "Live2dev",
+      "body": "A game campaign marketplace that connects game developers with streamers to promote and grow their games."
+    }
+  },
+  "cta": {
+    "heading": "Multiple products. One ecosystem."
+  },
+  "footer": {
+    "backToTop": "Back to top",
+    "pages": "Pages",
+    "homepage": "Homepage",
+    "products": "Products",
+    "focus": "Our Focus",
+    "research": "Research",
+    "company": "Company",
+    "about": "About",
+    "blog": "Blog",
+    "careers": "Careers",
+    "license": "License",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "talkToTeam": "Talk to the team",
+    "copyright": "© {year} Antigane. All rights reserved."
+  }
+}

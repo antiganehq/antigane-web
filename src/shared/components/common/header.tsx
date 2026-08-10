@@ -2,33 +2,19 @@
 
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useEffect, useState, type ReactNode } from "react";
-
-const primaryLinks = [
-  { label: "Products", href: "#products" },
-  { label: "Our Focus", href: "#focus" },
-  { label: "Research", href: "#research" },
-];
-
-const mobileLinks = [
-  { label: "Homepage", href: "#main-content" },
-  ...primaryLinks,
-];
-
-const utilityLinks = [
-  { label: "License", href: "#license" },
-  { label: "Security", href: "#security" },
-  { label: "Privacy", href: "#privacy" },
-  { label: "Terms", href: "#terms" },
-];
+import { Link } from "@/i18n/navigation";
+import { LanguageSwitcher } from "./language-switcher";
 
 function Logo(): ReactNode {
+  const t = useTranslations("header");
+
   return (
     <Link
       href="#main-content"
       className="focus-ring enter inline-flex items-center gap-2 rounded-sm text-foreground"
-      aria-label="Antigane home"
+      aria-label={t("logoAria")}
     >
       <Image
         width={20}
@@ -48,6 +34,22 @@ function Logo(): ReactNode {
 export function Header(): ReactNode {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const t = useTranslations("header");
+
+  const primaryLinks = [
+    { label: t("nav.products"), href: "#products" },
+    { label: t("nav.focus"), href: "#focus" },
+    { label: t("nav.research"), href: "#research" },
+  ];
+
+  const mobileLinks = [{ label: t("homepage"), href: "#main-content" }, ...primaryLinks];
+
+  const utilityLinks = [
+    { label: t("license"), href: "#license" },
+    { label: t("security"), href: "#security" },
+    { label: t("privacy"), href: "#privacy" },
+    { label: t("terms"), href: "#terms" },
+  ];
 
   const closeMenu = (): void => setIsOpen(false);
 
@@ -114,31 +116,17 @@ export function Header(): ReactNode {
           >
             Sign In
           </Link> */}
-          <Link
-            href="peridotvault.com"
-            style={{ ["--enter-delay" as string]: "320ms" }}
-            className={`focus-ring enter rounded-full px-5 py-2.5 text-sm font-medium text-foreground transition-[background-color] duration-300 ease-out hover:text-muted-foreground ${
-              isScrolled ? "bg-transparent" : "bg-muted hover:bg-border"
-            }`}
-          >
-            peridotvault.com
-          </Link>
+          <LanguageSwitcher enterDelay="320ms" />
         </div>
 
         <div className="ml-auto flex items-center gap-2 lg:hidden">
-          <Link
-            href="peridotvault.com"
-            style={{ ["--enter-delay" as string]: "120ms" }}
-            className="focus-ring enter rounded-full bg-muted px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-border"
-          >
-            peridotvault.com
-          </Link>
+          <LanguageSwitcher enterDelay="120ms" compact onSelect={closeMenu} />
           <button
             type="button"
             style={{ ["--enter-delay" as string]: "180ms" }}
             className="focus-ring enter inline-flex h-10 w-10 items-center justify-center rounded-full bg-muted text-foreground transition-colors hover:bg-border"
             aria-label={
-              isOpen ? "Close navigation menu" : "Open navigation menu"
+              isOpen ? t("menu.close") : t("menu.open")
             }
             aria-expanded={isOpen}
             aria-controls="mobile-navigation"
@@ -180,7 +168,7 @@ export function Header(): ReactNode {
 
           <div className="mt-12 flex flex-col items-start gap-2 pb-10">
             <p className="text-base font-medium tracking-[-0.02em] text-muted-foreground">
-              Desk
+              {t("desk")}
             </p>
             {utilityLinks.map((link) => (
               <Link

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Switch the `dark:` variant from the OS media query to a `.dark`
- * class on the html element, so next-themes drives the theme. */
+ * class on the html element, so the theme provider drives the theme. */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {

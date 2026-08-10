@@ -17,6 +17,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { SectionCorners } from "@/shared/components/ui/section-corners";
 
 const MORPH_TRANSITION: Transition = {
@@ -26,37 +28,55 @@ const MORPH_TRANSITION: Transition = {
 
 type ShowcaseCard = {
   id: string;
+  i18nKey: string;
   title: string;
   Icon: LucideIcon;
   body: string;
   url: string;
+  image: { vertical: string; horizontal: string };
 };
 
 const CARDS: ReadonlyArray<ShowcaseCard> = [
   {
     id: "peridot",
+    i18nKey: "peridot",
     title: "Peridot",
     Icon: Gamepad2,
-    body: "A game distribution platform where players discover, access, and help grow the games they love through a more connected gaming ecosystem.",
+    body: "",
     url: "https://peridotvault.com",
+    image: {
+      vertical: "/products/peridot-vertical.png",
+      horizontal: "/products/peridot-horizontal.png",
+    },
   },
   {
     id: "peridot-id",
+    i18nKey: "peridotId",
     title: "Peridot ID",
     Icon: Fingerprint,
-    body: "A unified identity platform giving every product in the Peridot ecosystem one sign-in, shared sessions, and player profiles that follow players everywhere.",
+    body: "",
     url: "https://peridot-id.peridotvault.com",
+    image: {
+      vertical: "/products/peridotid-vertical.png",
+      horizontal: "/products/peridotid-horizontal.png",
+    },
   },
   {
     id: "live2dev",
+    i18nKey: "live2dev",
     title: "Live2dev",
     Icon: Radio,
-    body: "A game campaign marketplace that connects game developers with streamers to promote and grow their games.",
+    body: "",
     url: "https://live2dev.com",
+    image: {
+      vertical: "/products/live2dev-vertical.png",
+      horizontal: "/products/live2dev-horizontal.png",
+    },
   },
 ];
 
 export function Showcase(): ReactNode {
+  const t = useTranslations("products");
   const [activeId, setActiveId] = useState<string | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [page, setPage] = useState(0);
@@ -140,9 +160,9 @@ export function Showcase(): ReactNode {
             id={headingId}
             className="text-4xl font-medium leading-[1.05] tracking-tighter text-foreground sm:text-5xl lg:text-[3.5rem] xl:text-[4rem]"
           >
-            Products Built
+            {t("heading")}
             <br />
-            <span className="text-muted-foreground">Under Antigane</span>
+            <span className="text-muted-foreground">{t("subheading")}</span>
           </h2>
         </div>
 
@@ -229,7 +249,9 @@ function Card({
   hidden: boolean;
   onClick: () => void;
 }): ReactNode {
+  const t = useTranslations("products");
   const { Icon } = card;
+  const title = t(`${card.i18nKey}.title`);
   return (
     <motion.div
       data-card
@@ -245,30 +267,41 @@ function Card({
       layoutId={`card-${card.id}`}
       transition={MORPH_TRANSITION}
       style={{ visibility: hidden ? "hidden" : "visible" }}
-      className="focus-ring group relative flex aspect-[3/4] w-[280px] shrink-0 cursor-pointer snap-center flex-col justify-between rounded-2xl bg-muted p-6 text-left sm:w-[320px] sm:p-7 lg:w-[360px] lg:p-8"
+      className="focus-ring group relative flex aspect-[3/4] w-[280px] shrink-0 cursor-pointer snap-center flex-col justify-between overflow-hidden rounded-2xl bg-muted p-6 text-left sm:w-[320px] sm:p-7 lg:w-[360px] lg:p-8"
     >
+      <Image
+        src={card.image.vertical}
+        alt=""
+        fill
+        sizes="(max-width: 640px) 280px, 360px"
+        className="absolute inset-0 object-cover"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"
+      />
       <motion.div
         layoutId={`card-icon-${card.id}`}
         transition={MORPH_TRANSITION}
-        className="flex h-11 w-11 items-center justify-center rounded-full bg-background/60 text-foreground"
+        className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white"
       >
         <Icon className="h-4 w-4" strokeWidth={1.5} />
       </motion.div>
-      <div className="space-y-5">
+      <div className="relative space-y-5">
         <motion.h3
           layoutId={`card-title-${card.id}`}
           transition={MORPH_TRANSITION}
-          className="whitespace-pre-line text-xl font-medium leading-tight tracking-tight text-foreground sm:text-2xl"
+          className="whitespace-pre-line text-xl font-medium leading-tight tracking-tight text-white sm:text-2xl"
         >
-          {card.title}
+          {title}
         </motion.h3>
         <motion.a
           href={card.url}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Visit ${card.title} website`}
+          aria-label={t("visit", { title })}
           onClick={(e) => e.stopPropagation()}
-          className="focus-ring inline-flex w-fit items-center rounded-full bg-background/60 px-3 py-1.5 text-xs font-medium tracking-tight text-muted-foreground transition-colors hover:bg-background/80 hover:text-foreground"
+          className="focus-ring inline-flex w-fit items-center rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium tracking-tight text-white transition-colors hover:bg-white/20"
         >
           {card.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
         </motion.a>
@@ -284,7 +317,10 @@ function ExpandedCard({
   card: ShowcaseCard;
   onClose: () => void;
 }): ReactNode {
+  const t = useTranslations("products");
   const { Icon } = card;
+  const title = t(`${card.i18nKey}.title`);
+  const body = t(`${card.i18nKey}.body`);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-6 sm:p-10">
       <motion.button
@@ -301,23 +337,41 @@ function ExpandedCard({
       <motion.div
         layoutId={`card-${card.id}`}
         transition={MORPH_TRANSITION}
-        className="relative z-10 flex aspect-[3/4] w-full max-w-[420px] flex-col justify-between rounded-2xl bg-muted p-8 sm:aspect-auto sm:max-w-2xl sm:p-10 lg:p-12"
+        className="relative z-10 flex aspect-[3/4] w-full max-w-[420px] flex-col justify-between overflow-hidden rounded-2xl bg-muted p-8 sm:aspect-auto sm:max-w-2xl sm:p-10 lg:p-12"
       >
+        <Image
+          src={card.image.vertical}
+          alt=""
+          fill
+          sizes="(max-width: 640px) 420px, 672px"
+          className="absolute inset-0 object-cover sm:hidden"
+        />
+        <Image
+          src={card.image.horizontal}
+          alt=""
+          fill
+          sizes="(max-width: 1024px) 672px, 896px"
+          className="absolute inset-0 hidden object-cover sm:block"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"
+        />
         <motion.div
           layoutId={`card-icon-${card.id}`}
           transition={MORPH_TRANSITION}
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-background/60 text-foreground"
+          className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white"
         >
           <Icon className="h-4 w-4" strokeWidth={1.5} />
         </motion.div>
 
-        <div className="mt-8 space-y-6 sm:mt-12">
+        <div className="relative mt-8 space-y-6 sm:mt-12">
           <motion.h3
             layoutId={`card-title-${card.id}`}
             transition={MORPH_TRANSITION}
-            className="whitespace-pre-line text-2xl font-medium leading-tight tracking-tight text-foreground sm:text-3xl lg:text-4xl"
+            className="whitespace-pre-line text-2xl font-medium leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl"
           >
-            {card.title}
+            {title}
           </motion.h3>
           <motion.p
             initial={{ opacity: 0, y: 8 }}
@@ -328,16 +382,16 @@ function ExpandedCard({
               delay: 0.18,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="max-w-prose text-sm leading-relaxed text-muted-foreground sm:text-base"
+            className="max-w-prose text-sm leading-relaxed text-white/80 sm:text-base"
           >
-            {card.body}
+            {body}
           </motion.p>
           <motion.a
             href={card.url}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Visit ${card.title} website`}
-            className="focus-ring inline-flex w-fit items-center rounded-full bg-background/60 px-3 py-1.5 text-xs font-medium tracking-tight text-muted-foreground transition-colors hover:bg-background/80 hover:text-foreground"
+            aria-label={t("visit", { title })}
+            className="focus-ring inline-flex w-fit items-center rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium tracking-tight text-white transition-colors hover:bg-white/20"
           >
             {card.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
           </motion.a>

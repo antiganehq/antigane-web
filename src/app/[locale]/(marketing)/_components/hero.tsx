@@ -1,8 +1,11 @@
 import { DitherShader } from "@/shared/components/dither-shader";
 import { SectionCorners } from "@/shared/components/ui/section-corners";
+import { getTranslations } from "next-intl/server";
 import React from "react";
 
-export default function Hero() {
+export default async function Hero() {
+  const t = await getTranslations("hero");
+
   return (
     <section className="relative border-b border-border">
       <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -11,7 +14,7 @@ export default function Hero() {
             style={{ ["--enter-delay" as string]: "380ms" }}
             className="enter text-4xl font-medium leading-[1.05] tracking-tighter text-foreground sm:text-5xl lg:text-[4rem] xl:text-[5.5rem]"
           >
-            Building Game, Blockchain, and AI Products.
+            {t("heading")}
           </h1>
           <div
             style={{ ["--enter-delay" as string]: "520ms" }}
@@ -21,7 +24,7 @@ export default function Hero() {
               href="#products"
               className="focus-ring inline-flex items-center gap-2 rounded-full px-2 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:text-muted-foreground"
             >
-              Explore Products
+              {t("explore")}
               <span
                 className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-foreground"
                 aria-hidden="true"
@@ -46,15 +49,14 @@ export default function Hero() {
             style={{ ["--enter-delay" as string]: "680ms" }}
             className="enter max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg"
           >
-            Antigane builds products across game distribution, blockchain
-            infrastructure, AI developer tools, and creator-powered discovery.
+            {t("tagline")}
           </p>
         </div>
         <div className="grid grid-cols-3 px-6 py-10 sm:px-10 lg:px-14">
           {[
-            { label: "Products", value: "3" },
-            { label: "Focus Areas", value: "3" },
-            { label: "Commercial Use", value: "Ready" },
+            { label: t("stats.products"), value: "3" },
+            { label: t("stats.focus"), value: "3" },
+            { label: t("stats.commercialUse"), value: t("stats.ready") },
           ].map((stat, i) => (
             <div
               key={stat.label}

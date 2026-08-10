@@ -1,25 +1,28 @@
 import { SectionCorners } from "@/shared/components/ui/section-corners";
+import { getTranslations } from "next-intl/server";
 
-export default function OurFocus() {
+export default async function OurFocus() {
+  const t = await getTranslations("focus");
+
   return (
     <section id="focus" className="relative border-b border-border p-6 sm:p-10 lg:p-14">
       <h2 className="overflow-hidden text-ellipsis whitespace-nowrap text-2xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-3xl lg:text-[2.5rem]">
-        What We Focus On
+        {t("title")}
       </h2>
 
       <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3 lg:mt-16 lg:gap-6">
         {[
           {
-            title: "Game",
-            body: "Building platforms that help games get discovered, distributed, and grown by players.",
+            title: t("game.title"),
+            body: t("game.body"),
           },
           {
-            title: "Blockchain",
-            body: "Creating wallet, licensing, and payment infrastructure for digital products.",
+            title: t("blockchain.title"),
+            body: t("blockchain.body"),
           },
           {
-            title: "Artificial Intelligence",
-            body: "Developing intelligent tools that help creators and developers build faster.",
+            title: t("ai.title"),
+            body: t("ai.body"),
           },
         ].map((card, i) => (
           <article

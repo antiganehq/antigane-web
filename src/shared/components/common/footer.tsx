@@ -1,53 +1,63 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 
-const linkColumns: ReadonlyArray<{
+type LinkColumn = {
   label: string;
   items: ReadonlyArray<{ label: string; href: string }>;
-}> = [
-  {
-    label: "Pages",
-    items: [
-      { label: "Homepage", href: "/#main-content" },
-      { label: "Products", href: "/#products" },
-      { label: "Our Focus", href: "/#focus" },
-      { label: "Research", href: "/#research" },
-    ],
-  },
-  {
-    label: "Products",
-    items: [
-      { label: "Peridot", href: "https://peridotvault.com" },
-      { label: "Peridot ID", href: "https://peridot-id.peridotvault.com" },
-      { label: "Live2dev", href: "https://live2dev.com" },
-    ],
-  },
-  {
-    label: "Company",
-    items: [
-      { label: "About", href: "#" },
-      { label: "Blog", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "License", href: "#" },
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
-    ],
-  },
-];
+};
 
-export function Footer(): ReactNode {
+export async function Footer(): Promise<ReactNode> {
+  const t = await getTranslations("footer");
+  const pt = await getTranslations("products");
+
+  const linkColumns: ReadonlyArray<LinkColumn> = [
+    {
+      label: t("pages"),
+      items: [
+        { label: t("homepage"), href: "/#main-content" },
+        { label: t("products"), href: "/#products" },
+        { label: t("focus"), href: "/#focus" },
+        { label: t("research"), href: "/#research" },
+      ],
+    },
+    {
+      label: t("products"),
+      items: [
+        { label: pt("peridot.title"), href: "https://peridotvault.com" },
+        {
+          label: pt("peridotId.title"),
+          href: "https://peridot-id.peridotvault.com",
+        },
+        { label: pt("live2dev.title"), href: "https://live2dev.com" },
+      ],
+    },
+    {
+      label: t("company"),
+      items: [
+        { label: t("about"), href: "#" },
+        { label: t("blog"), href: "#" },
+        { label: t("careers"), href: "#" },
+        { label: t("license"), href: "#" },
+        { label: t("privacy"), href: "#" },
+        { label: t("terms"), href: "#" },
+      ],
+    },
+  ];
+
   return (
     <section className="bg-background p-3 sm:p-4 lg:p-6">
       <div className="rounded-3xl bg-neutral-950! px-5 py-8 text-neutral-100! sm:px-8 sm:py-10 lg:px-10 lg:py-12 dark:bg-neutral-50! dark:text-neutral-900!">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[auto_1fr_auto] lg:gap-16">
           <div>
-            <a
+            <Link
               href="#main-content"
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-sm text-neutral-100 transition-colors hover:text-white dark:text-neutral-900 dark:hover:text-black"
             >
-              Back to top
+              {t("backToTop")}
               <span aria-hidden="true">↑</span>
-            </a>
+            </Link>
           </div>
 
           <nav
@@ -80,7 +90,7 @@ export function Footer(): ReactNode {
               href="#contact"
               className="focus-ring inline-flex items-center gap-2 rounded-full border border-neutral-700 px-5 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-neutral-100 transition-colors hover:border-neutral-500 dark:border-neutral-300 dark:text-neutral-900 dark:hover:border-neutral-500"
             >
-              Talk to the team
+              {t("talkToTeam")}
               <span aria-hidden="true">→</span>
             </a>
           </div>
@@ -102,7 +112,7 @@ export function Footer(): ReactNode {
           </div>
 
           <p className="text-sm text-neutral-500 dark:text-neutral-500">
-            © {new Date().getFullYear()} Antigane. All rights reserved.
+            {t("copyright", { year: new Date().getFullYear() })}
           </p>
         </div>
       </div>

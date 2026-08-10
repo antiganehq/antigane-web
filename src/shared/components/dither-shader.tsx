@@ -1,8 +1,8 @@
 "use client";
 
 import { Mesh, Program, Renderer, Triangle } from "ogl";
-import { useTheme } from "next-themes";
 import { useEffect, useRef, type ReactNode } from "react";
+import { useTheme } from "./theme-provider";
 
 const vertexShader = /* glsl */ `#version 300 es
   in vec2 position;
