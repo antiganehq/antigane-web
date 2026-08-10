@@ -17,10 +17,9 @@ const linkColumns: ReadonlyArray<{
   {
     label: "Products",
     items: [
-      { label: "Peridot Vault", href: "https://peridotvault.com" },
-      { label: "Peridot Wallet", href: "/#products" },
-      { label: "Peridot Code", href: "/#products" },
-      { label: "MainGame", href: "/#products" },
+      { label: "Peridot", href: "https://peridotvault.com" },
+      { label: "Peridot ID", href: "https://peridot-id.peridotvault.com" },
+      { label: "Live2dev", href: "https://live2dev.com" },
     ],
   },
   {

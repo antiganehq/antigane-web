@@ -4,12 +4,9 @@ import { AnimatePresence, motion, type Transition } from "motion/react";
 import {
   ChevronLeft,
   ChevronRight,
-  Plus,
-  TrendingUp,
-  Search,
-  Layers,
-  Boxes,
-  Sparkles,
+  Gamepad2,
+  Fingerprint,
+  Radio,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -32,32 +29,30 @@ type ShowcaseCard = {
   title: string;
   Icon: LucideIcon;
   body: string;
+  url: string;
 };
 
 const CARDS: ReadonlyArray<ShowcaseCard> = [
   {
-    id: "peridot-vault",
-    title: "Peridot Vault",
-    Icon: TrendingUp,
+    id: "peridot",
+    title: "Peridot",
+    Icon: Gamepad2,
     body: "A game distribution platform where players discover, access, and help grow the games they love through a more connected gaming ecosystem.",
+    url: "https://peridotvault.com",
   },
   {
-    id: "peridot-wallet",
-    title: "Peridot Wallet",
-    Icon: Search,
-    body: "A simple wallet experience built for gaming, digital access, and blockchain-powered applications without unnecessary complexity.",
+    id: "peridot-id",
+    title: "Peridot ID",
+    Icon: Fingerprint,
+    body: "A unified identity platform giving every product in the Peridot ecosystem one sign-in, shared sessions, and player profiles that follow players everywhere.",
+    url: "https://peridot-id.peridotvault.com",
   },
   {
-    id: "peridot-code",
-    title: "Peridot Code",
-    Icon: Layers,
-    body: "An AI-powered developer tool that helps builders create software, apps, and games faster with flexible model access and coding agents.",
-  },
-  {
-    id: "maingame",
-    title: "MainGame",
-    Icon: Boxes,
-    body: "A creator and gaming-focused product designed to support game discovery, community growth, and player-driven engagement.",
+    id: "live2dev",
+    title: "Live2dev",
+    Icon: Radio,
+    body: "A game campaign marketplace that connects game developers with streamers to promote and grow their games.",
+    url: "https://live2dev.com",
   },
 ];
 
@@ -236,10 +231,17 @@ function Card({
 }): ReactNode {
   const { Icon } = card;
   return (
-    <motion.button
-      type="button"
+    <motion.div
       data-card
+      role="button"
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick();
+        }
+      }}
       layoutId={`card-${card.id}`}
       transition={MORPH_TRANSITION}
       style={{ visibility: hidden ? "hidden" : "visible" }}
@@ -260,22 +262,18 @@ function Card({
         >
           {card.title}
         </motion.h3>
-        <motion.span
-          layoutId={`card-plus-${card.id}`}
-          aria-hidden="true"
-          transition={MORPH_TRANSITION}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-background/60 text-foreground"
+        <motion.a
+          href={card.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Visit ${card.title} website`}
+          onClick={(e) => e.stopPropagation()}
+          className="focus-ring inline-flex w-fit items-center rounded-full bg-background/60 px-3 py-1.5 text-xs font-medium tracking-tight text-muted-foreground transition-colors hover:bg-background/80 hover:text-foreground"
         >
-          <motion.span
-            className="inline-flex"
-            animate={{ rotate: 0 }}
-            transition={MORPH_TRANSITION}
-          >
-            <Plus className="h-4 w-4" strokeWidth={1.5} />
-          </motion.span>
-        </motion.span>
+          {card.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+        </motion.a>
       </div>
-    </motion.button>
+    </motion.div>
   );
 }
 
@@ -334,22 +332,15 @@ function ExpandedCard({
           >
             {card.body}
           </motion.p>
-          <motion.button
-            type="button"
-            onClick={onClose}
-            layoutId={`card-plus-${card.id}`}
-            transition={MORPH_TRANSITION}
-            aria-label="Close card"
-            className="focus-ring inline-flex h-9 w-9 items-center justify-center rounded-full bg-background/60 text-foreground transition-opacity hover:opacity-80"
+          <motion.a
+            href={card.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Visit ${card.title} website`}
+            className="focus-ring inline-flex w-fit items-center rounded-full bg-background/60 px-3 py-1.5 text-xs font-medium tracking-tight text-muted-foreground transition-colors hover:bg-background/80 hover:text-foreground"
           >
-            <motion.span
-              className="inline-flex"
-              animate={{ rotate: 45 }}
-              transition={MORPH_TRANSITION}
-            >
-              <Plus className="h-4 w-4" strokeWidth={1.5} />
-            </motion.span>
-          </motion.button>
+            {card.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+          </motion.a>
         </div>
       </motion.div>
     </div>

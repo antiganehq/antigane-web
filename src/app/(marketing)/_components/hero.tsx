@@ -52,7 +52,7 @@ export default function Hero() {
         </div>
         <div className="grid grid-cols-3 px-6 py-10 sm:px-10 lg:px-14">
           {[
-            { label: "Products", value: "4+" },
+            { label: "Products", value: "3" },
             { label: "Focus Areas", value: "3" },
             { label: "Commercial Use", value: "Ready" },
           ].map((stat, i) => (

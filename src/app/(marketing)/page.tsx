@@ -7,7 +7,7 @@ import { createMetadata } from "@/shared/lib/metadata";
 export const metadata = createMetadata({
   title: "Antigane — Building Game, Blockchain & AI Products",
   description:
-    "Discover Peridot Vault, Peridot Wallet, Peridot Code, and MainGame — products built under Antigane for game distribution, Web3 infrastructure, and AI-powered development.",
+    "Discover Peridot, Peridot ID, and Live2dev — products built under Antigane for game distribution, Web3 identity infrastructure, and creator-driven game campaigns.",
 });
 
 export default function Home() {
