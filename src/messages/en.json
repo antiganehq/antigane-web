@@ -82,6 +82,7 @@
       "byline": "By Antigane Labs",
       "abstractLabel": "Abstract",
       "bodyLabel": "Full text",
+      "referenceLabel": "Reference",
       "date": "Indonesia · 2026",
       "reading": "4 min read"
     },
@@ -104,6 +105,7 @@
     "indexKicker": "Index",
     "indexTitle": "Current notes",
     "publications": [],
+    "manuscripts": [],
     "countLine": "{total} items — {articles} articles · {pubs} publications",
     "pubsKicker": "Publications",
     "pubsTitle": "Journal publications",

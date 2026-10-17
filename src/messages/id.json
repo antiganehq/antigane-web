@@ -86,6 +86,7 @@
       "byline": "Oleh Antigane Labs",
       "abstractLabel": "Abstrak",
       "bodyLabel": "Teks lengkap",
+      "referenceLabel": "Referensi",
       "date": "Indonesia · 2026",
       "reading": "4 mnt baca"
     },
@@ -108,6 +109,7 @@
     "indexKicker": "Indeks",
     "indexTitle": "Catatan terkini",
     "publications": [],
+    "manuscripts": [],
     "countLine": "{total} karya — {articles} artikel · {pubs} publikasi",
     "pubsKicker": "Publikasi",
     "pubsTitle": "Publikasi jurnal",

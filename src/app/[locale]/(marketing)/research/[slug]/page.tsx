@@ -21,6 +21,7 @@ type Article = {
   standfirst: string;
   quote: string;
   paragraphs: string[];
+  referenceUrl?: string;
 };
 
 type Pub = {
@@ -101,9 +102,24 @@ export default async function ArticlePage({
     <div>
       <section className="border-b border-border">
         <div className="mx-auto max-w-[1280px] px-6 py-12 md:px-10 md:py-16">
-          <p className="tnum text-[13px] leading-relaxed text-muted-foreground">
-            {reference}
-          </p>
+          <div>
+            <p className="kicker text-muted-foreground">{t("meta.referenceLabel")}</p>
+            {/* shortcut: set per-article referenceUrl (e.g. DOI) to make the citation clickable. */}
+            <p className="tnum mt-2 text-[13px] leading-relaxed text-muted-foreground">
+              {article.referenceUrl ? (
+                <a
+                  href={article.referenceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4 decoration-1"
+                >
+                  {reference}
+                </a>
+              ) : (
+                reference
+              )}
+            </p>
+          </div>
           <div className="mt-6 grid grid-cols-12 gap-x-6 md:gap-x-8">
             <h1 className="col-span-12 font-display text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] tracking-[-0.01em] md:col-start-1 md:col-span-9">
               {article.title}

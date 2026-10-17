@@ -4,13 +4,22 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import {
+  SESSION_COOKIE,
+  SESSION_TTL_MS,
+  createSession,
+  hashPassword,
+  verifyPassword,
+} from "../session";
 
 // Research admin storage. No database, no services: saves commit the JSON
 // files to git. On Vercel (read-only disk) commits go through the GitHub API
 // and auto-redeploy; in local dev without GITHUB_TOKEN they write to disk.
 // Required env: only GITHUB_TOKEN (contents:write). Repo coordinates are
 // static consts below; auth creds live hashed in src/messages/admin.json.
-// Set them with: node scripts/set-admin-pass.mjs <user> <password-16+chars>
+// Set them with: node scripts/set-admin-pass.mjs <user> <password-4+chars>
+
+export type ActionState = { error?: string } | null;
 
 export type Article = {
   slug: string;
@@ -32,7 +41,7 @@ export type Publication = {
 };
 
 type Messages = Record<string, unknown> & {
-  research: { articles: Article[]; publications: Publication[] };
+  research: { articles: Article[]; publications: Publication[]; manuscripts: Article[] };
 };
 
 const LOCALES = ["en", "id"] as const;
@@ -89,23 +98,52 @@ function parseCredentials(formData: FormData): { user: string; pass: string } {
   need(user, "Username");
   if (user.includes(":")) throw new Error("Username cannot contain ':'");
   need(pass, "New password");
-  if (pass.length < 16) throw new Error("Password must be at least 16 characters");
+  if (pass.length < 4) throw new Error("Password must be at least 4 characters");
   if (pass !== confirm) throw new Error("Passwords do not match");
   return { user, pass };
 }
 
 async function writeCredentials(user: string, pass: string, message: string): Promise<void> {
-  const { randomBytes, createHash } = await import("node:crypto");
+  const { randomBytes } = await import("node:crypto");
   const salt = randomBytes(16).toString("hex");
-  const hash = createHash("sha256").update(`${salt}:${user}:${pass}`).digest("hex");
   await persistFile(
     "src/messages/admin.json",
-    `${JSON.stringify({ user, salt, hash }, null, 2)}\n`,
+    `${JSON.stringify({ user, salt, hash: hashPassword(salt, user, pass) }, null, 2)}\n`,
     message,
   );
 }
 
-export async function registerAdmin(formData: FormData): Promise<void> {
+export async function loginAdmin(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
+    const user = str(formData, "user");
+    const pass = str(formData, "password");
+    need(user, "Username");
+    need(pass, "Password");
+    const raw = await readFile(join(process.cwd(), "src", "messages", "admin.json"), "utf-8");
+    const { user: u, salt, hash } = JSON.parse(raw) as { user?: string; salt?: string; hash?: string };
+    if (!u || !salt || !hash || user !== u || !verifyPassword(salt, hash, user, pass)) {
+      throw new Error("Wrong username or password");
+    }
+    const { cookies } = await import("next/headers");
+    (await cookies()).set(SESSION_COOKIE, createSession(user, salt), {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/admin",
+      maxAge: SESSION_TTL_MS / 1000,
+    });
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/research/articles");
+}
+
+function fail(e: unknown): ActionState {
+  return { error: e instanceof Error ? e.message : "Something went wrong" };
+}
+
+export async function registerAdmin(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
   let current = "";
   try {
     const raw = await readFile(join(process.cwd(), "src", "messages", "admin.json"), "utf-8");
@@ -116,13 +154,20 @@ export async function registerAdmin(formData: FormData): Promise<void> {
   if (current) throw new Error("Admin already registered");
   const { user, pass } = parseCredentials(formData);
   await writeCredentials(user, pass, "research: register admin");
-  done();
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/login");
 }
 
-export async function saveCredentials(formData: FormData): Promise<void> {
-  const { user, pass } = parseCredentials(formData);
-  await writeCredentials(user, pass, "research: rotate admin credentials");
-  done();
+export async function saveCredentials(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
+    const { user, pass } = parseCredentials(formData);
+    await writeCredentials(user, pass, "research: rotate admin credentials");
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/access");
 }
 
 function str(fd: FormData, key: string): string {
@@ -133,12 +178,12 @@ function need(value: string, label: string): void {
   if (!value) throw new Error(`${label} is required`);
 }
 
-function done(): never {
+function done(path = "/admin/research"): never {
   revalidatePath("/", "layout");
-  redirect("/admin/research");
+  redirect(path);
 }
 
-export async function saveArticle(formData: FormData): Promise<void> {
+function parseArticle(formData: FormData): { locale: string; original: string; article: Article } {
   const locale = str(formData, "locale");
   const original = str(formData, "original");
   if (!LOCALES.includes(locale as "en") && !LOCALES.includes(locale as "id")) throw new Error("Bad locale");
@@ -159,6 +204,12 @@ export async function saveArticle(formData: FormData): Promise<void> {
   ] as const) need(v, l);
   if (!SLUG_RE.test(article.slug)) throw new Error("Slug must be lowercase letters, numbers, dashes");
   if (article.paragraphs.length === 0) throw new Error("At least one paragraph is required");
+  return { locale, original, article };
+}
+
+export async function saveArticle(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
+    const { locale, original, article } = parseArticle(formData);
 
   const data = await readMessages(locale);
   if (original) {
@@ -173,20 +224,28 @@ export async function saveArticle(formData: FormData): Promise<void> {
     data.research.articles.push(article);
   }
   await saveMessages(locale, data, `research(${locale}): save article ${article.slug}`);
-  done();
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/research/articles");
 }
 
-export async function deleteArticle(formData: FormData): Promise<void> {
-  const locale = str(formData, "locale");
-  const slug = str(formData, "slug");
-  const data = await readMessages(locale);
-  data.research.articles = data.research.articles.filter((a) => a.slug !== slug);
-  await saveMessages(locale, data, `research(${locale}): delete article ${slug}`);
-  done();
+export async function deleteArticle(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
+    const locale = str(formData, "locale");
+    const slug = str(formData, "slug");
+    const data = await readMessages(locale);
+    data.research.articles = data.research.articles.filter((a) => a.slug !== slug);
+    await saveMessages(locale, data, `research(${locale}): delete article ${slug}`);
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/research/articles");
 }
 
-export async function savePublication(formData: FormData): Promise<void> {
-  const locale = str(formData, "locale");
+export async function savePublication(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
+    const locale = str(formData, "locale");
   const index = Number(str(formData, "index"));
   const pub: Publication = {
     title: str(formData, "title"),
@@ -205,14 +264,73 @@ export async function savePublication(formData: FormData): Promise<void> {
     data.research.publications.push(pub);
   }
   await saveMessages(locale, data, `research(${locale}): save publication ${pub.title}`);
-  done();
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/research/journal");
 }
 
-export async function deletePublication(formData: FormData): Promise<void> {
-  const locale = str(formData, "locale");
-  const index = Number(str(formData, "index"));
-  const data = await readMessages(locale);
-  data.research.publications = data.research.publications.filter((_, i) => i !== index);
-  await saveMessages(locale, data, `research(${locale}): delete publication #${index}`);
-  done();
+export async function deletePublication(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
+    const locale = str(formData, "locale");
+    const index = Number(str(formData, "index"));
+    const data = await readMessages(locale);
+    data.research.publications = data.research.publications.filter((_, i) => i !== index);
+    await saveMessages(locale, data, `research(${locale}): delete publication #${index}`);
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/research/journal");
+}
+
+export async function saveManuscript(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
+    const { locale, original, article } = parseArticle(formData);
+    const data = await readMessages(locale);
+    if (original) {
+      const i = data.research.manuscripts.findIndex((a) => a.slug === original);
+      if (i === -1) throw new Error("Manuscript not found");
+      if (article.slug !== original && data.research.manuscripts.some((a) => a.slug === article.slug)) {
+        throw new Error("Slug already exists");
+      }
+      data.research.manuscripts[i] = article;
+    } else {
+      if (data.research.manuscripts.some((a) => a.slug === article.slug)) throw new Error("Slug already exists");
+      data.research.manuscripts.push(article);
+    }
+    await saveMessages(locale, data, `research(${locale}): save manuscript ${article.slug}`);
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/research/manuscripts");
+}
+
+export async function deleteManuscript(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
+    const locale = str(formData, "locale");
+    const slug = str(formData, "slug");
+    const data = await readMessages(locale);
+    data.research.manuscripts = data.research.manuscripts.filter((a) => a.slug !== slug);
+    await saveMessages(locale, data, `research(${locale}): delete manuscript ${slug}`);
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/research/manuscripts");
+}
+
+export async function publishManuscript(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  try {
+    const locale = str(formData, "locale");
+    const slug = str(formData, "slug");
+    const data = await readMessages(locale);
+    const i = data.research.manuscripts.findIndex((a) => a.slug === slug);
+    if (i === -1) throw new Error("Manuscript not found");
+    if (data.research.articles.some((a) => a.slug === slug)) throw new Error("Slug already exists in articles");
+    const [article] = data.research.manuscripts.splice(i, 1);
+    data.research.articles.push(article);
+    await saveMessages(locale, data, `research(${locale}): publish manuscript ${slug}`);
+  } catch (e) {
+    return fail(e);
+  }
+  done("/admin/research/articles");
 }
