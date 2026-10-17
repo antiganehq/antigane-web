@@ -75,12 +75,9 @@ export const baseMetadata: Metadata = {
     images: [siteConfig.ogImage],
     creator: siteConfig.creator,
   },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-icon.png",
-  },
-  manifest: "/site.webmanifest",
+  // No `icons` / `manifest` keys: /favicon.ico is served by the
+  // `src/app/favicon.ico` file convention. Declaring the other files
+  // here would emit <link> tags for files that don't exist in `public/`.
 };
 
 export function createMetadata({

@@ -1,54 +1,55 @@
-import { SectionCorners } from "@/shared/components/ui/section-corners";
+import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
 
 export default async function OurFocus() {
   const t = await getTranslations("focus");
 
-  return (
-    <section id="focus" className="relative border-b border-border p-6 sm:p-10 lg:p-14">
-      <h2 className="overflow-hidden text-ellipsis whitespace-nowrap text-2xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-3xl lg:text-[2.5rem]">
-        {t("title")}
-      </h2>
+  const rows = [
+    { no: "01", title: t("game.title"), body: t("game.body") },
+    { no: "02", title: t("blockchain.title"), body: t("blockchain.body") },
+    { no: "03", title: t("ai.title"), body: t("ai.body") },
+  ] as const;
 
-      <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3 lg:mt-16 lg:gap-6">
-        {[
-          {
-            title: t("game.title"),
-            body: t("game.body"),
-          },
-          {
-            title: t("blockchain.title"),
-            body: t("blockchain.body"),
-          },
-          {
-            title: t("ai.title"),
-            body: t("ai.body"),
-          },
-        ].map((card, i) => (
-          <article
-            key={card.title}
-            className={`group relative flex min-h-65 flex-col justify-between rounded-2xl bg-muted p-6 sm:p-8 lg:min-h-75 ${
-              i > 0
-                ? "md:before:absolute md:before:-left-2 md:before:top-0 md:before:bottom-0 md:before:w-px md:before:bg-border md:before:content-[''] lg:before:-left-3"
-                : ""
-            }`}
-          >
-            <h3 className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold leading-tight tracking-tight text-foreground sm:text-xl">
-              {card.title}{" "}
-              <span
-                aria-hidden="true"
-                className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1"
-              >
-                →
-              </span>
-            </h3>
-            <p className="mt-12 max-w-[28ch] text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {card.body}
-            </p>
-          </article>
-        ))}
+  return (
+    <section id="focus" className="border-b border-border">
+      <div className="mx-auto max-w-[1280px] px-6 py-12 md:px-10 md:py-16">
+        <div className="h-px w-full bg-border" aria-hidden="true" />
+        <p className="kicker mt-6 text-muted-foreground">{t("kicker")}</p>
+        <div className="mt-4 grid grid-cols-12 gap-x-6 md:gap-x-8">
+          <h2 className="col-span-12 font-display text-[clamp(1.75rem,3vw,2.75rem)] leading-[1.1] tracking-[-0.005em] md:col-start-1 md:col-span-8">
+            {t("title")}
+          </h2>
+        </div>
+        <div className="mt-8 grid grid-cols-12 gap-x-6 md:gap-x-8">
+          <p className="lede col-span-12 max-w-[66ch] text-[1.125rem] leading-[1.6] md:col-start-2 md:col-span-6">
+            {t("lede")}
+          </p>
+        </div>
+        <div className="mt-12 border-t border-border">
+          {rows.map((row) => (
+            <div
+              key={row.no}
+              className="grid grid-cols-12 gap-x-6 gap-y-2 border-b border-border py-6 md:gap-x-8"
+            >
+              <p className="tnum col-span-2 text-sm text-muted-foreground md:col-span-1">
+                {row.no}
+              </p>
+              <h3 className="col-span-10 font-display text-xl leading-tight md:col-span-5 md:text-2xl">
+                {row.title}
+              </h3>
+              <p className="col-span-10 col-start-3 max-w-[66ch] text-sm leading-relaxed text-muted-foreground sm:text-base md:col-start-7 md:col-span-5">
+                {row.body}
+              </p>
+            </div>
+          ))}
+        </div>
+        <Link
+          href="/research"
+          className="mt-8 inline-block text-sm text-foreground underline underline-offset-4 decoration-1"
+        >
+          {t("methodLink")} →
+        </Link>
       </div>
-      <SectionCorners />
     </section>
   );
 }

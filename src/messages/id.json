@@ -22,9 +22,15 @@
     }
   },
   "hero": {
+    "kicker": "PT Antigane Labs Indonesia",
     "heading": "Membangun Produk Game, Blockchain, dan AI.",
     "tagline": "Antigane membangun produk di bidang distribusi game, infrastruktur blockchain, alat developer AI, dan penemuan berbasis kreator.",
     "explore": "Jelajahi Produk",
+    "meta": {
+      "place": "Indonesia",
+      "focus": "Game · Blockchain · AI",
+      "reading": "2 mnt baca"
+    },
     "stats": {
       "products": "Produk",
       "focus": "Fokus",
@@ -33,7 +39,10 @@
     }
   },
   "focus": {
+    "kicker": "Yang kami kaji",
     "title": "Fokus Kami",
+    "lede": "Kami perusahaan berbasis riset. Setiap produk berawal dari pertanyaan tentang bagaimana game ditemukan, dimiliki, dan ditumbuhkan.",
+    "methodLink": "Bagaimana kami mengkaji ketiganya",
     "game": {
       "title": "Game",
       "body": "Membangun platform yang membantu game ditemukan, didistribusikan, dan bertumbuh oleh para pemain."
@@ -48,6 +57,7 @@
     }
   },
   "products": {
+    "kicker": "Indeks karya",
     "heading": "Produk Dibangun",
     "subheading": "di Bawah Antigane",
     "visit": "Kunjungi situs {title}",
@@ -65,7 +75,93 @@
     }
   },
   "cta": {
+    "kicker": "Kolofon",
     "heading": "Banyak produk. Satu ekosistem."
+  },
+  "research": {
+    "kicker": "Riset Antigane",
+    "title": "Catatan riset tentang game, kepemilikan, dan kecerdasan mesin.",
+    "standfirst": "PT Antigane Labs Indonesia mengkaji bagaimana game ditemukan, bagaimana barang digital tetap dimiliki, dan bagaimana AI mempercepat builder. Catatan singkat, dikirim bersama produk.",
+    "meta": {
+      "byline": "Oleh Antigane Labs",
+      "abstractLabel": "Abstrak",
+      "bodyLabel": "Teks lengkap",
+      "date": "Indonesia · 2026",
+      "reading": "4 mnt baca"
+    },
+    "areasKicker": "Bidang kajian",
+    "areasTitle": "Tiga pertanyaan yang terus kami ajukan",
+    "areas": {
+      "game": {
+        "title": "Distribusi game",
+        "body": "Bagaimana penemuan, akses, dan pertumbuhan oleh pemain saling menguatkan. Peridot adalah eksperimen berjalan kami."
+      },
+      "blockchain": {
+        "title": "Infrastruktur kepemilikan",
+        "body": "Dompet, lisensi, dan pembayaran agar barang digital tetap portabel. Peridot ID mengembannya."
+      },
+      "ai": {
+        "title": "Kecerdasan builder",
+        "body": "Alat AI kecil yang menghapus kerja berulang untuk developer dan streamer. Live2dev membuktikannya tiap pekan."
+      }
+    },
+    "indexKicker": "Indeks",
+    "indexTitle": "Catatan terkini",
+    "publications": [],
+    "countLine": "{total} karya — {articles} artikel · {pubs} publikasi",
+    "pubsKicker": "Publikasi",
+    "pubsTitle": "Publikasi jurnal",
+    "forthcoming": "Segera hadir — pengajuan jurnal pertama kami sedang disiapkan.",
+    "articles": [
+      {
+        "slug": "player-led-distribution",
+        "area": "Game",
+        "date": "Jan 2026",
+        "reading": "5 mnt baca",
+        "authors": ["Ranaufal Muha"],
+        "title": "Distribusi oleh pemain",
+        "standfirst": "Kanal pertumbuhan termurah yang kami temukan adalah pemain yang merasa seperti pemilik. Peridot dibangun di atas pengamatan itu.",
+        "quote": "Pemain menumbuhkan game lebih cepat daripada iklan.",
+        "paragraphs": [
+          "Sebagian besar pemasaran game menyewa perhatian per tayang. Tagihannya datang setiap bulan, dan saat belanja berhenti, penemuan ikut berhenti. Game independen tidak bisa memenangkan lelang itu, jadi kami mencari kanal yang bertumbuh majemuk, bukan yang mengatur ulang.",
+          "Yang bertumbuh majemuk adalah pemain yang merasa seperti pemegang saham. Ketika akses, hadiah, dan identitas hidup dalam satu ekosistem, merekomendasikan game berhenti menjadi bantuan dan mulai menjadi investasi. Peridot Vault adalah uji berjalan kami atas klaim itu.",
+          "Tanda-tanda awal mendukung tesis ini. Game yang ditemukan lewat pemain bertahan lebih baik daripada lewat umpan, karena rekomendasi datang bersama kepercayaan. Distribusi, dengan kata lain, adalah fitur sosial sebelum menjadi anggaran pemasaran."
+        ]
+      },
+      {
+        "slug": "one-identity-across-worlds",
+        "area": "Blockchain",
+        "date": "Feb 2026",
+        "reading": "4 mnt baca",
+        "authors": ["Ranaufal Muha"],
+        "title": "Satu identitas lintas dunia",
+        "standfirst": "Pemain tidak seharusnya membuktikan siapa mereka di setiap game. Peridot ID membawa satu masuk, satu sesi, dan satu profil ke mana pun.",
+        "quote": "Identitas harus ikut bersama pemain.",
+        "paragraphs": [
+          "Setiap game baru meminta pemain mulai dari nol: akun baru, kata sandi baru, inventaris baru yang tidak bisa keluar. Friksinya terlihat kecil per game dan sangat besar di seluruh ekosistem. Pemain pergi sebelum sempat merasa betah.",
+          "Peridot ID menjawab dengan satu prinsip: buktikan sekali, main di mana pun. Satu proses masuk, sesi bersama, dan profil yang mengikuti pemain di semua produk ekosistem, dengan dompet dan catatan kepemilikan yang benar-benar mereka kendalikan.",
+          "Pertanyaan riset di bawahnya adalah tentang portabilitas. Jika identitas dan barang bergerak bebas, developer bersaing lewat game-nya bukan lewat penguncian — dan pemain menghargai game yang menghormati mereka."
+        ]
+      },
+      {
+        "slug": "creators-as-growth",
+        "area": "Kecerdasan Buatan",
+        "date": "Mar 2026",
+        "reading": "5 mnt baca",
+        "authors": ["Ranaufal Muha"],
+        "title": "Kreator sebagai pertumbuhan",
+        "standfirst": "Streamer menggerakkan pasar untuk game. Live2dev mengubah pengaruh itu menjadi marketplace yang benar-benar bisa dibeli developer.",
+        "quote": "Streamer yang memainkan game Anda adalah iklannya.",
+        "paragraphs": [
+          "Untuk game kecil, satu streamer bisa lebih berarti daripada kampanye peluncuran. Namun developer menemukan kreator lewat keberuntungan dan bernegosiasi lewat pesan langsung. Pasarnya ada tetapi tidak punya rel.",
+          "Live2dev memasang rel itu: developer memasang kampanye, streamer memilih game yang benar-benar mereka suka, dan kedua sisi melacak apa yang dihasilkan siaran. Perkakas AI menghapus kerja berulang — pencocokan, brief, dan pelaporan — agar manusia mengerjakan bagian yang hanya bisa dikerjakan manusia.",
+          "Yang kami kaji adalah atribusi. Ketika instalasi dari kreator bisa diukur jujur, anggaran pemasaran mengikuti kinerja bukan harapan."
+        ]
+      }
+    ],
+    "closeKicker": "Metode",
+    "closeTitle": "Bangun, ukur, publikasikan.",
+    "closeBody": "Kami membuat prototipe secara terbuka, menyimpan yang bertumbuh, dan melipat sisanya ke catatan berikutnya."
   },
   "footer": {
     "backToTop": "Kembali ke atas",

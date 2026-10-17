@@ -12,8 +12,8 @@ function Logo(): ReactNode {
 
   return (
     <Link
-      href="#main-content"
-      className="focus-ring enter inline-flex items-center gap-2 rounded-sm text-foreground"
+      href="/"
+      className="focus-ring inline-flex items-center gap-2 rounded-sm text-foreground"
       aria-label={t("logoAria")}
     >
       <Image
@@ -24,7 +24,7 @@ function Logo(): ReactNode {
         className="h-5 w-5 shrink-0 invert dark:invert-0"
         aria-hidden="true"
       />
-      <span className="text-lg font-semibold leading-none tracking-tight">
+      <span className="font-display text-lg leading-none tracking-tight">
         Antigane
       </span>
     </Link>
@@ -33,16 +33,15 @@ function Logo(): ReactNode {
 
 export function Header(): ReactNode {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const t = useTranslations("header");
 
   const primaryLinks = [
-    { label: t("nav.products"), href: "#products" },
-    { label: t("nav.focus"), href: "#focus" },
-    { label: t("nav.research"), href: "#research" },
+    { label: t("nav.products"), href: "/#products" },
+    { label: t("nav.focus"), href: "/#focus" },
+    { label: t("nav.research"), href: "/research" },
   ];
 
-  const mobileLinks = [{ label: t("homepage"), href: "#main-content" }, ...primaryLinks];
+  const mobileLinks = [{ label: t("homepage"), href: "/" }, ...primaryLinks];
 
   const utilityLinks = [
     { label: t("license"), href: "#license" },
@@ -52,16 +51,6 @@ export function Header(): ReactNode {
   ];
 
   const closeMenu = (): void => setIsOpen(false);
-
-  useEffect(() => {
-    const handleScroll = (): void => {
-      setIsScrolled(window.scrollY > 8);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -77,31 +66,16 @@ export function Header(): ReactNode {
   }, [isOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80">
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 z-10 h-[7px] w-[7px] -translate-x-1/2 translate-y-1/2 border border-border bg-background"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 right-0 z-10 h-[7px] w-[7px] translate-x-1/2 translate-y-1/2 border border-border bg-background"
-      />
-
-      <div className="flex h-16 items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-border bg-background">
+      <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-6 md:px-10">
         <Logo />
 
-        <nav
-          className={`hidden rounded-full px-2 py-1.5 transition-[background-color] duration-300 ease-out lg:ml-12 lg:flex lg:items-center lg:gap-1 ${
-            isScrolled ? "bg-transparent" : "bg-muted"
-          }`}
-          aria-label="Primary navigation"
-        >
-          {primaryLinks.map((link, i) => (
+        <nav className="hidden lg:ml-12 lg:flex lg:items-center lg:gap-6" aria-label="Primary navigation">
+          {primaryLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              style={{ ["--enter-delay" as string]: `${80 + i * 60}ms` }}
-              className="focus-ring enter rounded-full px-4 py-1.5 text-sm font-medium text-foreground transition-colors hover:text-muted-foreground"
+              className="focus-ring text-[13px] font-medium text-foreground transition-colors hover:text-muted-foreground"
             >
               {link.label}
             </Link>
@@ -109,22 +83,14 @@ export function Header(): ReactNode {
         </nav>
 
         <div className="ml-auto hidden items-center gap-4 lg:flex">
-          {/* <Link
-            href="#signin"
-            style={{ ["--enter-delay" as string]: "260ms" }}
-            className="focus-ring enter rounded-full px-2 py-1.5 text-sm font-medium text-foreground transition-colors hover:text-muted-foreground"
-          >
-            Sign In
-          </Link> */}
-          <LanguageSwitcher enterDelay="320ms" />
+          <LanguageSwitcher enterDelay="0ms" />
         </div>
 
         <div className="ml-auto flex items-center gap-2 lg:hidden">
-          <LanguageSwitcher enterDelay="120ms" compact onSelect={closeMenu} />
+          <LanguageSwitcher enterDelay="0ms" compact onSelect={closeMenu} />
           <button
             type="button"
-            style={{ ["--enter-delay" as string]: "180ms" }}
-            className="focus-ring enter inline-flex h-10 w-10 items-center justify-center rounded-full bg-muted text-foreground transition-colors hover:bg-border"
+            className="focus-ring inline-flex h-10 items-center justify-center border border-border px-3 text-sm text-foreground"
             aria-label={
               isOpen ? t("menu.close") : t("menu.open")
             }

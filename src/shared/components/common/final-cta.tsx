@@ -1,24 +1,25 @@
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
-import { DitherShader } from "../dither-shader";
+import { Link } from "@/i18n/navigation";
 
 export async function FinalCTA(): Promise<ReactNode> {
   const t = await getTranslations("cta");
 
   return (
-    <section className="bg-background p-6 sm:p-10 lg:p-14">
-      <div className="overflow-hidden rounded-3xl border border-border bg-neutral-50 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,420px)]">
-          <div className="flex min-h-80 flex-col justify-center px-8 py-12 sm:px-12 sm:py-16 lg:border-r lg:border-neutral-200 lg:px-14 lg:py-20 dark:lg:border-neutral-800">
-            <h2 className="max-w-md text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl lg:text-[2.5rem]">
+    <section className="border-b border-border">
+      <div className="mx-auto max-w-[1280px] px-6 py-12 md:px-10 md:py-16">
+        <div className="grid grid-cols-12 gap-x-6 md:gap-x-8">
+          <div className="col-span-12 md:col-start-2 md:col-span-6">
+            <p className="kicker text-muted-foreground">{t("kicker")}</p>
+            <h2 className="mt-4 font-display text-[clamp(1.75rem,3vw,2.75rem)] leading-[1.1]">
               {t("heading")}
             </h2>
-          </div>
-
-          <div className="relative min-h-80 p-2 lg:min-h-90">
-            <div className="relative h-full w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-              <DitherShader variant="cta" />
-            </div>
+            <Link
+              href="/research"
+              className="mt-6 inline-block text-sm text-foreground underline underline-offset-4 decoration-1"
+            >
+              Read the research →
+            </Link>
           </div>
         </div>
       </div>

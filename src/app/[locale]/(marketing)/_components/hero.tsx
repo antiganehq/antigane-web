@@ -1,79 +1,49 @@
-import { DitherShader } from "@/shared/components/dither-shader";
-import { SectionCorners } from "@/shared/components/ui/section-corners";
 import { getTranslations } from "next-intl/server";
-import React from "react";
 
 export default async function Hero() {
   const t = await getTranslations("hero");
 
   return (
-    <section className="relative border-b border-border">
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="flex min-h-130 flex-col justify-center px-6 py-16 sm:px-10 sm:py-20 lg:min-h-160 lg:border-r lg:border-border lg:px-14 lg:py-24">
-          <h1
-            style={{ ["--enter-delay" as string]: "380ms" }}
-            className="enter text-4xl font-medium leading-[1.05] tracking-tighter text-foreground sm:text-5xl lg:text-[4rem] xl:text-[5.5rem]"
-          >
+    <section className="border-b border-border">
+      <div className="mx-auto max-w-[1280px] px-6 py-12 md:px-10 md:py-16">
+        <p className="kicker flex items-center gap-3 text-muted-foreground">
+          <span aria-hidden="true" className="inline-block h-px w-12 bg-foreground" />
+          {t("kicker")}
+        </p>
+        <div className="mt-6 grid grid-cols-12 gap-x-6 md:gap-x-8">
+          <h1 className="col-span-12 font-display text-[clamp(2.75rem,6vw,5rem)] leading-[1.04] tracking-[-0.01em] text-foreground md:col-start-1 md:col-span-9">
             {t("heading")}
           </h1>
-          <div
-            style={{ ["--enter-delay" as string]: "520ms" }}
-            className="enter mt-10 flex flex-wrap items-center gap-6"
-          >
+          <p className="col-span-12 mt-6 max-w-[50ch] text-[clamp(1.15rem,1.6vw,1.5rem)] leading-relaxed text-muted-foreground md:col-start-1 md:col-span-6">
+            {t("tagline")}
+          </p>
+          <div className="col-span-12 mt-6 border-l border-border pl-4 text-[13px] leading-relaxed text-muted-foreground md:col-start-10 md:col-span-3 md:mt-2">
+            <p>{t("meta.place")}</p>
+            <p className="mt-1">{t("meta.focus")}</p>
+            <p className="mt-1">{t("meta.reading")}</p>
             <a
               href="#products"
-              className="focus-ring inline-flex items-center gap-2 rounded-full px-2 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:text-muted-foreground"
+              className="mt-4 inline-block text-foreground underline underline-offset-4 decoration-1"
             >
-              {t("explore")}
-              <span
-                className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-foreground"
-                aria-hidden="true"
-              >
-                <span className="ml-px block h-0 w-0 border-y-4 border-l-[6px] border-y-transparent border-l-background" />
-              </span>
+              {t("explore")} →
             </a>
           </div>
         </div>
-
-        <div
-          style={{ ["--enter-delay" as string]: "200ms" }}
-          className="enter-fade relative min-h-80 overflow-hidden lg:min-h-160"
-        >
-          <DitherShader />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 border-t border-border lg:grid-cols-2">
-        <div className="border-b border-border px-6 py-10 sm:px-10 lg:border-b-0 lg:border-r lg:px-14">
-          <p
-            style={{ ["--enter-delay" as string]: "680ms" }}
-            className="enter max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            {t("tagline")}
-          </p>
-        </div>
-        <div className="grid grid-cols-3 px-6 py-10 sm:px-10 lg:px-14">
+        <div className="mt-12 grid grid-cols-3 gap-6 border-t border-border pt-6">
           {[
             { label: t("stats.products"), value: "3" },
             { label: t("stats.focus"), value: "3" },
             { label: t("stats.commercialUse"), value: t("stats.ready") },
-          ].map((stat, i) => (
-            <div
-              key={stat.label}
-              style={{ ["--enter-delay" as string]: `${740 + i * 80}ms` }}
-              className="enter"
-            >
-              <p className="text-xs font-medium tracking-wide text-muted-foreground sm:text-sm">
-                {stat.label}
-              </p>
-              <p className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+          ].map((stat) => (
+            <div key={stat.label}>
+              <p className="text-[13px] text-muted-foreground">{stat.label}</p>
+              <p className="tnum mt-2 text-2xl tracking-tight text-foreground sm:text-3xl">
                 {stat.value}
               </p>
             </div>
           ))}
         </div>
       </div>
-      <SectionCorners />
     </section>
   );
 }
