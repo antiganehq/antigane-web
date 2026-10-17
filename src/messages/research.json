@@ -1,0 +1,114 @@
+{
+  "articles": [
+    {
+      "slug": "player-led-distribution",
+      "title": "Player-led distribution",
+      "authors": [
+        "Antigane Labs"
+      ],
+      "date": "Jan 2026",
+      "area": "Game",
+      "abstract": "The cheapest growth channel we have found is a player who feels like an owner. Peridot is built around that observation.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "Most game marketing rents attention by the impression. The bill arrives every month, and the moment spending stops, discovery stops with it. Independent games cannot win that auction, so we looked for a channel that compounds instead of resetting."
+        },
+        {
+          "type": "paragraph",
+          "text": "What compounds is a player who feels like a stakeholder. When access, rewards, and identity live in one ecosystem, recommending a game stops being a favor and starts being an investment. Peridot Vault is our running test of that claim: discovery, access, and player-led growth in a single loop."
+        },
+        {
+          "type": "paragraph",
+          "text": "Early signs agree with the thesis. Games surfaced by players retain better than games surfaced by feeds, because the recommendation arrives with trust attached. Distribution, in other words, is **a social** *feature* ++before++ it is a [peridotvault](https://peridotvault.com) budget."
+        },
+        {
+          "type": "image",
+          "src": "https://cdn.thenewstack.io/media/2026/03/2777d715-img_2911-1024x768.jpg",
+          "caption": "the new stack problem hehe",
+          "alt": "the new stack"
+        },
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Testing ini nice 1"
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Testing ini nice 2"
+        },
+        {
+          "type": "paragraph",
+          "text": "Early signs agree with the thesis. Games surfaced by players retain better than games surfaced by feeds, because the recommendation arrives with trust attached. Distribution, in other words, is **a social** *feature* ++before++ it is a [peridotvault](https://peridotvault.com) budget. Early signs agree with the thesis. Games surfaced by players retain better than games surfaced by feeds, because the recommendation arrives with trust attached. Distribution, in other words, is **a social** *feature* ++before++ it is a [peridotvault](https://peridotvault.com) budget."
+        },
+        {
+          "type": "paragraph",
+          "text": "Early signs agree with the thesis. Games surfaced by players retain better than games surfaced by feeds, because the recommendation arrives with trust attached. Distribution, in other words, is **a social** *feature* ++before++ it is a [peridotvault](https://peridotvault.com) budget. Early signs agree with the thesis. Games surfaced by players retain better than games surfaced by feeds, because the recommendation arrives with trust attached. Distribution, in other words, is **a social** *feature* ++before++ it is a [peridotvault](https://peridotvault.com) budget."
+        }
+      ],
+      "references": [
+        {
+          "authors": "authors john, johnn doe",
+          "year": "2025",
+          "title": "this is my publication title",
+          "venue": "venue"
+        }
+      ]
+    },
+    {
+      "slug": "one-identity-across-worlds",
+      "title": "One identity across worlds",
+      "authors": [
+        "Antigane Labs"
+      ],
+      "date": "Feb 2026",
+      "area": "Blockchain",
+      "venue": "",
+      "abstract": "Players should not re-prove who they are in every game. Peridot ID carries one sign-in, one session, and one profile everywhere.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "Every new game asks players to start over: a new account, a new password, a new inventory that cannot leave. The friction looks small per game and enormous across an ecosystem. Players churn before they ever feel at home."
+        },
+        {
+          "type": "paragraph",
+          "text": "Peridot ID answers with a single principle: prove once, play everywhere. One sign-in, shared sessions, and profiles that follow players across every product in the ecosystem, with wallets and ownership records they actually control."
+        },
+        {
+          "type": "paragraph",
+          "text": "The research question underneath is about portability. If identity and goods move freely, developers compete on the game instead of on lock-in — and players reward the games that respect them."
+        }
+      ],
+      "references": []
+    },
+    {
+      "slug": "creators-as-growth",
+      "title": "Creators as growth",
+      "authors": [
+        "Antigane Labs"
+      ],
+      "date": "Mar 2026",
+      "area": "Artificial Intelligence",
+      "venue": "",
+      "abstract": "Streamers move markets for games. Live2dev turns that influence into a marketplace developers can actually buy.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "For small games, a single streamer can matter more than a launch campaign. Yet developers discover creators by luck and negotiate by direct message. The market exists but has no rails."
+        },
+        {
+          "type": "paragraph",
+          "text": "Live2dev lays those rails: developers post campaigns, streamers pick games they genuinely like, and both sides track what the broadcast produced. AI tooling removes the grunt work — matching, briefs, and reporting — so humans do the part only humans can do."
+        },
+        {
+          "type": "paragraph",
+          "text": "What we are studying is attribution. When creator-driven installs can be measured honestly, marketing budgets follow performance instead of hope."
+        }
+      ],
+      "references": []
+    }
+  ],
+  "manuscripts": [],
+  "publications": []
+}

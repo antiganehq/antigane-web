@@ -20,7 +20,6 @@ export default async function Hero() {
           <div className="col-span-12 mt-6 border-l border-border pl-4 text-[13px] leading-relaxed text-muted-foreground md:col-start-10 md:col-span-3 md:mt-2">
             <p>{t("meta.place")}</p>
             <p className="mt-1">{t("meta.focus")}</p>
-            <p className="mt-1">{t("meta.reading")}</p>
             <a
               href="#products"
               className="mt-4 inline-block text-foreground underline underline-offset-4 decoration-1"

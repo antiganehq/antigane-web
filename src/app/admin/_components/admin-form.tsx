@@ -1,11 +1,7 @@
 "use client";
 
 import { useActionState, type ReactNode } from "react";
-import type { ActionState } from "../research/actions";
-
-type AdminAction = (prev: ActionState, formData: FormData) => Promise<ActionState>;
-
-export type { AdminAction };
+import type { ActionState, AdminAction } from "./form-state";
 
 // Server-action form that shows failures as an inline alert (role=alert)
 // instead of replacing the page with an error boundary.

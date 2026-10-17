@@ -28,8 +28,7 @@
     "explore": "Explore Products",
     "meta": {
       "place": "Indonesia",
-      "focus": "Games · Blockchain · AI",
-      "reading": "2 min read"
+      "focus": "Games · Blockchain · AI"
     },
     "stats": {
       "products": "Products",
@@ -83,8 +82,7 @@
       "abstractLabel": "Abstract",
       "bodyLabel": "Full text",
       "referenceLabel": "Reference",
-      "date": "Indonesia · 2026",
-      "reading": "4 min read"
+      "date": "Indonesia · 2026"
     },
     "areasKicker": "Areas of study",
     "areasTitle": "Three questions we keep asking",
@@ -104,59 +102,10 @@
     },
     "indexKicker": "Index",
     "indexTitle": "Current notes",
-    "publications": [],
-    "manuscripts": [],
     "countLine": "{total} items — {articles} articles · {pubs} publications",
     "pubsKicker": "Publications",
     "pubsTitle": "Journal publications",
     "forthcoming": "Forthcoming — our first journal submissions are in preparation.",
-    "articles": [
-      {
-        "slug": "player-led-distribution",
-        "area": "Game",
-        "date": "Jan 2026",
-        "reading": "5 min read",
-        "authors": ["Ranaufal Muha"],
-        "title": "Player-led distribution",
-        "standfirst": "The cheapest growth channel we have found is a player who feels like an owner. Peridot is built around that observation.",
-        "quote": "Players grow games faster than ads do.",
-        "paragraphs": [
-          "Most game marketing rents attention by the impression. The bill arrives every month, and the moment spending stops, discovery stops with it. Independent games cannot win that auction, so we looked for a channel that compounds instead of resetting.",
-          "What compounds is a player who feels like a stakeholder. When access, rewards, and identity live in one ecosystem, recommending a game stops being a favor and starts being an investment. Peridot Vault is our running test of that claim: discovery, access, and player-led growth in a single loop.",
-          "Early signs agree with the thesis. Games surfaced by players retain better than games surfaced by feeds, because the recommendation arrives with trust attached. Distribution, in other words, is a social feature before it is a marketing budget."
-        ]
-      },
-      {
-        "slug": "one-identity-across-worlds",
-        "area": "Blockchain",
-        "date": "Feb 2026",
-        "reading": "4 min read",
-        "authors": ["Ranaufal Muha"],
-        "title": "One identity across worlds",
-        "standfirst": "Players should not re-prove who they are in every game. Peridot ID carries one sign-in, one session, and one profile everywhere.",
-        "quote": "Identity should travel with the player.",
-        "paragraphs": [
-          "Every new game asks players to start over: a new account, a new password, a new inventory that cannot leave. The friction looks small per game and enormous across an ecosystem. Players churn before they ever feel at home.",
-          "Peridot ID answers with a single principle: prove once, play everywhere. One sign-in, shared sessions, and profiles that follow players across every product in the ecosystem, with wallets and ownership records they actually control.",
-          "The research question underneath is about portability. If identity and goods move freely, developers compete on the game instead of on lock-in — and players reward the games that respect them."
-        ]
-      },
-      {
-        "slug": "creators-as-growth",
-        "area": "Artificial Intelligence",
-        "date": "Mar 2026",
-        "reading": "5 min read",
-        "authors": ["Ranaufal Muha"],
-        "title": "Creators as growth",
-        "standfirst": "Streamers move markets for games. Live2dev turns that influence into a marketplace developers can actually buy.",
-        "quote": "A streamer playing your game is the ad.",
-        "paragraphs": [
-          "For small games, a single streamer can matter more than a launch campaign. Yet developers discover creators by luck and negotiate by direct message. The market exists but has no rails.",
-          "Live2dev lays those rails: developers post campaigns, streamers pick games they genuinely like, and both sides track what the broadcast produced. AI tooling removes the grunt work — matching, briefs, and reporting — so humans do the part only humans can do.",
-          "What we are studying is attribution. When creator-driven installs can be measured honestly, marketing budgets follow performance instead of hope."
-        ]
-      }
-    ],
     "closeKicker": "Method",
     "closeTitle": "Build, measure, publish.",
     "closeBody": "We prototype in public, keep what compounds, and fold the rest back into the next note."

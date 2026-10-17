@@ -1,6 +1,8 @@
 import { createMetadata } from "@/shared/lib/metadata";
 import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
+import researchContent from "@/messages/research.json";
+import type { ResearchItem } from "@/features/research/types";
 
 export async function generateMetadata({
   params,
@@ -26,24 +28,9 @@ export default async function ResearchPage() {
     { no: "03", title: t("areas.ai.title"), body: t("areas.ai.body") },
   ];
 
-  const notes = t.raw("articles") as Array<{
-    slug: string;
-    area: string;
-    date: string;
-    reading: string;
-    title: string;
-  }>;
-  const pubs = (t.raw("publications") as Array<{
-    slug?: string;
-    title: string;
-    venue: string;
-    year: string;
-    authors: string[];
-    url: string;
-    reference?: string;
-  }> | undefined) ?? [];
-  const pubReference = (p: (typeof pubs)[number]) =>
-    p.reference ?? `${p.authors.join(", ")} (${p.year}). ${p.title}. ${p.venue}.`;
+  // Research content is locale-agnostic: one list for every locale.
+  const notes = researchContent.articles as ResearchItem[];
+  const pubs = researchContent.publications as ResearchItem[];
 
   return (
     <div>
@@ -63,7 +50,6 @@ export default async function ResearchPage() {
             <div className="col-span-12 mt-6 border-l border-border pl-4 text-[13px] leading-relaxed text-muted-foreground md:col-start-10 md:col-span-3 md:mt-2">
               <p>{t("meta.byline")}</p>
               <p className="mt-1">{t("meta.date")}</p>
-              <p className="mt-1">{t("meta.reading")}</p>
             </div>
           </div>
         </div>
@@ -124,7 +110,7 @@ export default async function ResearchPage() {
                   {n.title}
                 </p>
                 <p className="col-span-10 col-start-3 text-sm text-background/60 md:col-start-7 md:col-span-5">
-                  {n.area} · {n.date} · {n.reading} →
+                  {n.authors.join(", ")} · {n.date} →
                 </p>
               </Link>
             ))}
@@ -145,7 +131,7 @@ export default async function ResearchPage() {
                   className="grid grid-cols-12 gap-x-6 gap-y-1 border-b border-background/15 py-5 md:gap-x-8"
                 >
                   <p className="tnum col-span-2 text-sm text-background/60 md:col-span-1">
-                    {p.year}
+                    {p.date}
                   </p>
                   <p className="col-span-10 text-base font-medium text-background md:col-span-5">
                     {p.slug ? (
@@ -169,7 +155,7 @@ export default async function ResearchPage() {
                     )}
                   </p>
                   <p className="col-span-10 col-start-3 text-sm text-background/60 md:col-start-7 md:col-span-5">
-                    {pubReference(p)}
+                    {p.authors.join(", ")} ({p.date}). {p.title}. {p.venue}.
                   </p>
                 </div>
               ))

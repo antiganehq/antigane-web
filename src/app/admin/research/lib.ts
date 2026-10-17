@@ -1,19 +1,13 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { Article, Publication } from "./actions";
+import type { ResearchData } from "@/features/research/types";
 
-export type ResearchData = {
-  articles: Article[];
-  publications: Publication[];
-  manuscripts: Article[];
-};
-
-export async function getResearch(locale: string): Promise<ResearchData> {
-  const raw = await readFile(join(process.cwd(), "src", "messages", `${locale}.json`), "utf-8");
-  const research = (JSON.parse(raw) as { research: ResearchData }).research;
+export async function getResearch(): Promise<ResearchData> {
+  const raw = await readFile(join(process.cwd(), "src", "messages", "research.json"), "utf-8");
+  const data = JSON.parse(raw) as ResearchData;
   return {
-    articles: research.articles ?? [],
-    publications: research.publications ?? [],
-    manuscripts: research.manuscripts ?? [],
+    articles: data.articles ?? [],
+    publications: data.publications ?? [],
+    manuscripts: data.manuscripts ?? [],
   };
 }

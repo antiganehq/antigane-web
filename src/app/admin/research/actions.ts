@@ -11,6 +11,8 @@ import {
   hashPassword,
   verifyPassword,
 } from "../session";
+import type { BodyBlock, Reference, ResearchData, ResearchItem } from "@/features/research/types";
+import type { ActionState } from "../_components/form-state";
 
 // Research admin storage. No database, no services: saves commit the JSON
 // files to git. On Vercel (read-only disk) commits go through the GitHub API
@@ -19,32 +21,6 @@ import {
 // static consts below; auth creds live hashed in src/messages/admin.json.
 // Set them with: node scripts/set-admin-pass.mjs <user> <password-4+chars>
 
-export type ActionState = { error?: string } | null;
-
-export type Article = {
-  slug: string;
-  area: string;
-  date: string;
-  reading: string;
-  title: string;
-  standfirst: string;
-  quote: string;
-  paragraphs: string[];
-};
-
-export type Publication = {
-  title: string;
-  venue: string;
-  year: string;
-  authors: string;
-  url: string;
-};
-
-type Messages = Record<string, unknown> & {
-  research: { articles: Article[]; publications: Publication[]; manuscripts: Article[] };
-};
-
-const LOCALES = ["en", "id"] as const;
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 // Static repo coordinates — change here if the repo or deploy branch moves.
 const GH_OWNER = "antiganehq";
@@ -57,9 +33,10 @@ function gh(): { owner: string; repo: string; branch: string; token: string } | 
   return { owner: GH_OWNER, repo: GH_REPO, branch: GH_BRANCH, token };
 }
 
-async function readMessages(locale: string): Promise<Messages> {
-  const raw = await readFile(join(process.cwd(), "src", "messages", `${locale}.json`), "utf-8");
-  return JSON.parse(raw) as Messages;
+// Research content is locale-agnostic: one list shown in every locale.
+async function readResearch(): Promise<ResearchData> {
+  const raw = await readFile(join(process.cwd(), "src", "messages", "research.json"), "utf-8");
+  return JSON.parse(raw) as ResearchData;
 }
 
 async function persistFile(repoPath: string, body: string, message: string): Promise<void> {
@@ -87,8 +64,8 @@ async function persistFile(repoPath: string, body: string, message: string): Pro
   if (!put.ok) throw new Error(`GitHub write failed (${put.status})`);
 }
 
-async function saveMessages(locale: string, data: Messages, message: string): Promise<void> {
-  await persistFile(`src/messages/${locale}.json`, `${JSON.stringify(data, null, 2)}\n`, message);
+async function saveResearch(data: ResearchData, message: string): Promise<void> {
+  await persistFile(`src/messages/research.json`, `${JSON.stringify(data, null, 2)}\n`, message);
 }
 
 function parseCredentials(formData: FormData): { user: string; pass: string } {
@@ -183,47 +160,106 @@ function done(path = "/admin/research"): never {
   redirect(path);
 }
 
-function parseArticle(formData: FormData): { locale: string; original: string; article: Article } {
-  const locale = str(formData, "locale");
+function parseBlocks(raw: string): BodyBlock[] {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw || "[]");
+  } catch {
+    throw new Error("Body blocks are not valid JSON");
+  }
+  if (!Array.isArray(parsed)) throw new Error("Body must be a list of blocks");
+  return parsed.map((b, i) => {
+    if (typeof b !== "object" || b === null) throw new Error(`Block #${i + 1} is invalid`);
+    const block = b as Record<string, unknown>;
+    if (block.type === "heading") {
+      if (typeof block.text !== "string" || !block.text.trim()) {
+        throw new Error(`Block #${i + 1} needs text`);
+      }
+      if (block.level !== 1 && block.level !== 2 && block.level !== 3) {
+        throw new Error(`Heading block #${i + 1} needs level 1, 2, or 3`);
+      }
+      return { type: "heading", level: block.level, text: block.text };
+    }
+    if (block.type === "paragraph") {
+      if (typeof block.text !== "string" || !block.text.trim()) {
+        throw new Error(`Block #${i + 1} needs text`);
+      }
+      return { type: "paragraph", text: block.text };
+    }
+    if (block.type === "image") {
+      if (typeof block.src !== "string" || !block.src.trim()) {
+        throw new Error(`Image block #${i + 1} needs a source URL`);
+      }
+      return {
+        type: "image",
+        src: block.src,
+        caption: typeof block.caption === "string" ? block.caption : "",
+        alt: typeof block.alt === "string" ? block.alt : "",
+      } as BodyBlock;
+    }
+    throw new Error(`Block #${i + 1} has an unknown type`);
+  });
+}
+
+function parseReferences(raw: string): Reference[] {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw || "[]");
+  } catch {
+    throw new Error("References are not valid JSON");
+  }
+  if (!Array.isArray(parsed)) throw new Error("References must be a list");
+  return parsed.map((r, i) => {
+    if (typeof r !== "object" || r === null) throw new Error(`Reference #${i + 1} is invalid`);
+    const ref = r as Record<string, unknown>;
+    if (typeof ref.title !== "string" || !ref.title.trim()) {
+      throw new Error(`Reference #${i + 1} needs a title`);
+    }
+    const s = (v: unknown) => (typeof v === "string" ? v : "");
+    return { authors: s(ref.authors), year: s(ref.year), title: ref.title, venue: s(ref.venue), url: s(ref.url) || undefined };
+  });
+}
+
+function parseItem(formData: FormData): { original: string; item: ResearchItem } {
   const original = str(formData, "original");
-  if (!LOCALES.includes(locale as "en") && !LOCALES.includes(locale as "id")) throw new Error("Bad locale");
-  const article: Article = {
+  const authors = str(formData, "authors").split(",").map((a) => a.trim()).filter(Boolean);
+  if (authors.length === 0) throw new Error("At least one author is required");
+  const item: ResearchItem = {
     slug: str(formData, "slug"),
-    area: str(formData, "area"),
-    date: str(formData, "date"),
-    reading: str(formData, "reading"),
     title: str(formData, "title"),
-    standfirst: str(formData, "standfirst"),
-    quote: str(formData, "quote"),
-    paragraphs: str(formData, "paragraphs").split("\n").map((p) => p.trim()).filter(Boolean),
+    authors,
+    date: str(formData, "date"),
+    area: str(formData, "area") || undefined,
+    venue: str(formData, "venue") || undefined,
+    abstract: str(formData, "abstract"),
+    body: parseBlocks(str(formData, "body")),
+    references: parseReferences(str(formData, "references")),
+    url: str(formData, "url") || undefined,
   };
   for (const [v, l] of [
-    [article.slug, "Slug"], [article.area, "Area"], [article.date, "Date"],
-    [article.reading, "Reading"], [article.title, "Title"],
-    [article.standfirst, "Standfirst"], [article.quote, "Quote"],
+    [item.slug, "Slug"], [item.title, "Title"], [item.date, "Date"], [item.abstract, "Abstract"],
   ] as const) need(v, l);
-  if (!SLUG_RE.test(article.slug)) throw new Error("Slug must be lowercase letters, numbers, dashes");
-  if (article.paragraphs.length === 0) throw new Error("At least one paragraph is required");
-  return { locale, original, article };
+  if (!SLUG_RE.test(item.slug)) throw new Error("Slug must be lowercase letters, numbers, dashes");
+  return { original, item };
 }
 
 export async function saveArticle(_prev: ActionState, formData: FormData): Promise<ActionState> {
   try {
-    const { locale, original, article } = parseArticle(formData);
+    const { original, item: article } = parseItem(formData);
 
-  const data = await readMessages(locale);
+  const data = await readResearch();
   if (original) {
-    const i = data.research.articles.findIndex((a) => a.slug === original);
+    const i = data.articles.findIndex((a) => a.slug === original);
     if (i === -1) throw new Error("Article not found");
-    if (article.slug !== original && data.research.articles.some((a) => a.slug === article.slug)) {
+    if (article.slug !== original && data.articles.some((a) => a.slug === article.slug)) {
       throw new Error("Slug already exists");
     }
-    data.research.articles[i] = article;
+    data.articles[i] = article;
   } else {
-    if (data.research.articles.some((a) => a.slug === article.slug)) throw new Error("Slug already exists");
-    data.research.articles.push(article);
+    if (data.articles.some((a) => a.slug === article.slug)) throw new Error("Slug already exists");
+    data.articles.push(article);
   }
-  await saveMessages(locale, data, `research(${locale}): save article ${article.slug}`);
+  await saveResearch(data, `research: save article ${article.slug}`);
   } catch (e) {
     return fail(e);
   }
@@ -232,11 +268,10 @@ export async function saveArticle(_prev: ActionState, formData: FormData): Promi
 
 export async function deleteArticle(_prev: ActionState, formData: FormData): Promise<ActionState> {
   try {
-    const locale = str(formData, "locale");
     const slug = str(formData, "slug");
-    const data = await readMessages(locale);
-    data.research.articles = data.research.articles.filter((a) => a.slug !== slug);
-    await saveMessages(locale, data, `research(${locale}): delete article ${slug}`);
+    const data = await readResearch();
+    data.articles = data.articles.filter((a) => a.slug !== slug);
+    await saveResearch(data, `research: delete article ${slug}`);
   } catch (e) {
     return fail(e);
   }
@@ -245,25 +280,20 @@ export async function deleteArticle(_prev: ActionState, formData: FormData): Pro
 
 export async function savePublication(_prev: ActionState, formData: FormData): Promise<ActionState> {
   try {
-    const locale = str(formData, "locale");
-  const index = Number(str(formData, "index"));
-  const pub: Publication = {
-    title: str(formData, "title"),
-    venue: str(formData, "venue"),
-    year: str(formData, "year"),
-    authors: str(formData, "authors"),
-    url: str(formData, "url"),
-  };
-  for (const [v, l] of [
-    [pub.title, "Title"], [pub.venue, "Venue"], [pub.year, "Year"], [pub.authors, "Authors"],
-  ] as const) need(v, l);
-  const data = await readMessages(locale);
-  if (Number.isInteger(index) && index >= 0 && index < data.research.publications.length) {
-    data.research.publications[index] = pub;
-  } else {
-    data.research.publications.push(pub);
-  }
-  await saveMessages(locale, data, `research(${locale}): save publication ${pub.title}`);
+    const { original, item: pub } = parseItem(formData);
+    const data = await readResearch();
+    if (original) {
+      const i = data.publications.findIndex((p) => p.slug === original);
+      if (i === -1) throw new Error("Publication not found");
+      if (pub.slug !== original && data.publications.some((p) => p.slug === pub.slug)) {
+        throw new Error("Slug already exists");
+      }
+      data.publications[i] = pub;
+    } else {
+      if (data.publications.some((p) => p.slug === pub.slug)) throw new Error("Slug already exists");
+      data.publications.push(pub);
+    }
+    await saveResearch(data, `research: save publication ${pub.slug}`);
   } catch (e) {
     return fail(e);
   }
@@ -272,11 +302,10 @@ export async function savePublication(_prev: ActionState, formData: FormData): P
 
 export async function deletePublication(_prev: ActionState, formData: FormData): Promise<ActionState> {
   try {
-    const locale = str(formData, "locale");
-    const index = Number(str(formData, "index"));
-    const data = await readMessages(locale);
-    data.research.publications = data.research.publications.filter((_, i) => i !== index);
-    await saveMessages(locale, data, `research(${locale}): delete publication #${index}`);
+    const slug = str(formData, "slug");
+    const data = await readResearch();
+    data.publications = data.publications.filter((p) => p.slug !== slug);
+    await saveResearch(data, `research: delete publication ${slug}`);
   } catch (e) {
     return fail(e);
   }
@@ -285,20 +314,20 @@ export async function deletePublication(_prev: ActionState, formData: FormData):
 
 export async function saveManuscript(_prev: ActionState, formData: FormData): Promise<ActionState> {
   try {
-    const { locale, original, article } = parseArticle(formData);
-    const data = await readMessages(locale);
+    const { original, item: article } = parseItem(formData);
+    const data = await readResearch();
     if (original) {
-      const i = data.research.manuscripts.findIndex((a) => a.slug === original);
+      const i = data.manuscripts.findIndex((a) => a.slug === original);
       if (i === -1) throw new Error("Manuscript not found");
-      if (article.slug !== original && data.research.manuscripts.some((a) => a.slug === article.slug)) {
+      if (article.slug !== original && data.manuscripts.some((a) => a.slug === article.slug)) {
         throw new Error("Slug already exists");
       }
-      data.research.manuscripts[i] = article;
+      data.manuscripts[i] = article;
     } else {
-      if (data.research.manuscripts.some((a) => a.slug === article.slug)) throw new Error("Slug already exists");
-      data.research.manuscripts.push(article);
+      if (data.manuscripts.some((a) => a.slug === article.slug)) throw new Error("Slug already exists");
+      data.manuscripts.push(article);
     }
-    await saveMessages(locale, data, `research(${locale}): save manuscript ${article.slug}`);
+    await saveResearch(data, `research: save manuscript ${article.slug}`);
   } catch (e) {
     return fail(e);
   }
@@ -307,11 +336,10 @@ export async function saveManuscript(_prev: ActionState, formData: FormData): Pr
 
 export async function deleteManuscript(_prev: ActionState, formData: FormData): Promise<ActionState> {
   try {
-    const locale = str(formData, "locale");
     const slug = str(formData, "slug");
-    const data = await readMessages(locale);
-    data.research.manuscripts = data.research.manuscripts.filter((a) => a.slug !== slug);
-    await saveMessages(locale, data, `research(${locale}): delete manuscript ${slug}`);
+    const data = await readResearch();
+    data.manuscripts = data.manuscripts.filter((a) => a.slug !== slug);
+    await saveResearch(data, `research: delete manuscript ${slug}`);
   } catch (e) {
     return fail(e);
   }
@@ -320,15 +348,14 @@ export async function deleteManuscript(_prev: ActionState, formData: FormData): 
 
 export async function publishManuscript(_prev: ActionState, formData: FormData): Promise<ActionState> {
   try {
-    const locale = str(formData, "locale");
     const slug = str(formData, "slug");
-    const data = await readMessages(locale);
-    const i = data.research.manuscripts.findIndex((a) => a.slug === slug);
+    const data = await readResearch();
+    const i = data.manuscripts.findIndex((a) => a.slug === slug);
     if (i === -1) throw new Error("Manuscript not found");
-    if (data.research.articles.some((a) => a.slug === slug)) throw new Error("Slug already exists in articles");
-    const [article] = data.research.manuscripts.splice(i, 1);
-    data.research.articles.push(article);
-    await saveMessages(locale, data, `research(${locale}): publish manuscript ${slug}`);
+    if (data.articles.some((a) => a.slug === slug)) throw new Error("Slug already exists in articles");
+    const [article] = data.manuscripts.splice(i, 1);
+    data.articles.push(article);
+    await saveResearch(data, `research: publish manuscript ${slug}`);
   } catch (e) {
     return fail(e);
   }
