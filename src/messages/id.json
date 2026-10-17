@@ -84,35 +84,20 @@
     "meta": {
       "byline": "Oleh Antigane Labs",
       "abstractLabel": "Abstrak",
-      "bodyLabel": "Teks lengkap",
+      "bodyLabel": "Konten",
       "referenceLabel": "Referensi",
       "date": "Indonesia · 2026"
     },
-    "areasKicker": "Bidang kajian",
-    "areasTitle": "Tiga pertanyaan yang terus kami ajukan",
-    "areas": {
-      "game": {
-        "title": "Distribusi game",
-        "body": "Bagaimana penemuan, akses, dan pertumbuhan oleh pemain saling menguatkan. Peridot adalah eksperimen berjalan kami."
-      },
-      "blockchain": {
-        "title": "Infrastruktur kepemilikan",
-        "body": "Dompet, lisensi, dan pembayaran agar barang digital tetap portabel. Peridot ID mengembannya."
-      },
-      "ai": {
-        "title": "Kecerdasan builder",
-        "body": "Alat AI kecil yang menghapus kerja berulang untuk developer dan streamer. Live2dev membuktikannya tiap pekan."
-      }
-    },
     "indexKicker": "Indeks",
-    "indexTitle": "Catatan terkini",
-    "countLine": "{total} karya — {articles} artikel · {pubs} publikasi",
+    "indexTitle": "Rekaman lengkap",
+    "countLine": "{total} karya — {articles} artikel · {manuscripts} manuskrip · {pubs} publikasi",
     "pubsKicker": "Publikasi",
     "pubsTitle": "Publikasi jurnal",
     "forthcoming": "Segera hadir — pengajuan jurnal pertama kami sedang disiapkan.",
-    "closeKicker": "Metode",
-    "closeTitle": "Bangun, ukur, publikasikan.",
-    "closeBody": "Kami membuat prototipe secara terbuka, menyimpan yang bertumbuh, dan melipat sisanya ke catatan berikutnya."
+    "mssKicker": "Manuskrip",
+    "mssTitle": "Manuskrip berjalan",
+    "articlesKicker": "Riset",
+    "articlesTitle": "Artikel"
   },
   "footer": {
     "backToTop": "Kembali ke atas",

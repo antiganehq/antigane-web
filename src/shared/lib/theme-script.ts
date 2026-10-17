@@ -1,6 +1,6 @@
 export const THEME_STORAGE_KEY = "theme";
 
-export type Theme = "light" | "dark" | "system";
+export type Theme = "light" | "dark";
 
 export function getThemeScript(): string {
   return `
@@ -10,11 +10,9 @@ export function getThemeScript(): string {
       try {
         stored = localStorage.getItem("${THEME_STORAGE_KEY}");
       } catch (_) {}
-      var theme = stored || "system";
-      var dark =
-        theme === "dark" ||
-        (theme === "system" &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches);
+      // Static theme: dark everywhere unless explicitly stored as light.
+      // The device color-scheme preference is intentionally ignored.
+      var dark = stored !== "light";
       root.classList.toggle("dark", dark);
       root.style.colorScheme = dark ? "dark" : "light";
     })();

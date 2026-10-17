@@ -10,8 +10,13 @@ import type { ResearchItem } from "@/features/research/types";
 const articles = researchContent.articles as ResearchItem[];
 
 function getArticle(slug: string): ResearchItem | null {
-  // Locale-agnostic: one article list for every locale.
-  return articles.find((a) => a.slug === slug) ?? null;
+  // Locale-agnostic: articles, then manuscripts, then publications.
+  const lists = [researchContent.articles, researchContent.manuscripts, researchContent.publications];
+  for (const list of lists) {
+    const hit = (list as ResearchItem[]).find((a) => a.slug === slug);
+    if (hit) return hit;
+  }
+  return null;
 }
 
 export function generateStaticParams() {
@@ -80,16 +85,20 @@ export default async function ArticlePage({
       <section className="border-b border-border">
         <div className="mx-auto max-w-[1280px] px-6 py-12 md:px-10 md:py-16">
           <div className="grid grid-cols-12 gap-x-6 md:gap-x-8">
-            <div className="col-span-12 md:col-start-2 md:col-span-6">
-              <p className="kicker text-muted-foreground">{t("meta.abstractLabel")}</p>
-              <p className="mt-4 max-w-[66ch] border-l border-border pl-4 text-[1.125rem] leading-[1.6] text-muted-foreground">
-                {article.abstract}
-              </p>
+            <div className="col-span-12">
+              <div className="mx-auto max-w-2xl">
+                <h2 className="font-display text-3xl leading-tight md:text-4xl">{t("meta.abstractLabel")}</h2>
+                <p className="mt-4 border-l border-border pl-4 text-[1.125rem] leading-[1.6] text-foreground">
+                  {article.abstract}
+                </p>
+              </div>
             </div>
           </div>
           <div className="mt-12 grid grid-cols-12 gap-x-6 md:gap-x-8">
-            <div className="col-span-12 md:col-start-2 md:col-span-6">
-              <p className="kicker text-muted-foreground">{t("meta.bodyLabel")}</p>
+            <div className="col-span-12">
+              <div className="mx-auto max-w-2xl">
+                <h2 className="font-display text-3xl leading-tight md:text-4xl">{t("meta.bodyLabel")}</h2>
+              </div>
               <div className="mt-4">
                 <BlockBody blocks={article.body} />
               </div>
@@ -97,9 +106,10 @@ export default async function ArticlePage({
           </div>
           {article.references.length > 0 ? (
             <div className="mt-12 grid grid-cols-12 gap-x-6 md:gap-x-8">
-              <div className="col-span-12 md:col-start-2 md:col-span-6">
-                <p className="kicker text-muted-foreground">{t("meta.referenceLabel")}</p>
-                <ol className="tnum mt-4 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
+              <div className="col-span-12">
+                <div className="mx-auto max-w-2xl">
+                  <h2 className="font-display text-3xl leading-tight md:text-4xl">{t("meta.referenceLabel")}</h2>
+                  <ol className="mt-4 list-decimal space-y-2 pl-5 text-[1.125rem] leading-[1.6] text-foreground">
                   {article.references.map((r, i) => (
                     <li key={i}>
                       {r.authors} ({r.year}). {r.title}. {r.venue}.{" "}
@@ -116,6 +126,7 @@ export default async function ArticlePage({
                     </li>
                   ))}
                 </ol>
+                </div>
               </div>
             </div>
           ) : null}

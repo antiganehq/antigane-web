@@ -17,19 +17,15 @@ type ThemeContextValue = {
 };
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: "system",
-  resolvedTheme: "light",
+  theme: "dark",
+  resolvedTheme: "dark",
   setTheme: () => {},
 });
 
-function systemTheme(): "light" | "dark" {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
-
+// Static theme: dark everywhere unless explicitly stored as light.
+// The device color-scheme preference is intentionally ignored.
 function applyTheme(theme: Theme): "light" | "dark" {
-  const resolved = theme === "system" ? systemTheme() : theme;
+  const resolved = theme;
   const root = document.documentElement;
   root.classList.toggle("dark", resolved === "dark");
   root.style.colorScheme = resolved;
@@ -38,36 +34,21 @@ function applyTheme(theme: Theme): "light" | "dark" {
 
 export function ThemeProvider({ children }: { children: ReactNode }): ReactNode {
   const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof document === "undefined") return "system";
+    if (typeof document === "undefined") return "dark";
     try {
       const stored = localStorage.getItem(THEME_STORAGE_KEY);
-      if (stored === "light" || stored === "dark") return stored;
+      if (stored === "light") return "light";
     } catch {
-      return "system";
+      return "dark";
     }
-    return "system";
+    return "dark";
   });
-  const [systemDark, setSystemDark] = useState<boolean>(() =>
-    typeof document === "undefined"
-      ? false
-      : window.matchMedia("(prefers-color-scheme: dark)").matches
-  );
 
-  const resolvedTheme: "light" | "dark" =
-    theme === "system" ? (systemDark ? "dark" : "light") : theme;
+  const resolvedTheme: "light" | "dark" = theme;
 
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
-
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = (e: MediaQueryListEvent): void => {
-      setSystemDark(e.matches);
-    };
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
 
   const value = useMemo<ThemeContextValue>(
     () => ({
@@ -76,11 +57,7 @@ export function ThemeProvider({ children }: { children: ReactNode }): ReactNode 
       setTheme: (next) => {
         setThemeState(next);
         try {
-          if (next === "system") {
-            localStorage.removeItem(THEME_STORAGE_KEY);
-          } else {
-            localStorage.setItem(THEME_STORAGE_KEY, next);
-          }
+          localStorage.setItem(THEME_STORAGE_KEY, next);
         } catch {
           // localStorage unavailable (e.g. private mode)
         }

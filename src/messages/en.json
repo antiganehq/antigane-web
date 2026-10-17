@@ -80,35 +80,20 @@
     "meta": {
       "byline": "By Antigane Labs",
       "abstractLabel": "Abstract",
-      "bodyLabel": "Full text",
-      "referenceLabel": "Reference",
+      "bodyLabel": "Content",
+      "referenceLabel": "References",
       "date": "Indonesia · 2026"
     },
-    "areasKicker": "Areas of study",
-    "areasTitle": "Three questions we keep asking",
-    "areas": {
-      "game": {
-        "title": "Game distribution",
-        "body": "How discovery, access, and player-led growth compound. Peridot is our running experiment."
-      },
-      "blockchain": {
-        "title": "Ownership infrastructure",
-        "body": "Wallets, licensing, and payments that keep digital goods portable. Peridot ID carries this."
-      },
-      "ai": {
-        "title": "Builder intelligence",
-        "body": "Small AI tools that remove grunt work for developers and streamers. Live2dev proves it weekly."
-      }
-    },
     "indexKicker": "Index",
-    "indexTitle": "Current notes",
-    "countLine": "{total} items — {articles} articles · {pubs} publications",
+    "indexTitle": "Complete record",
+    "countLine": "{total} items — {articles} articles · {manuscripts} manuscripts · {pubs} publications",
     "pubsKicker": "Publications",
     "pubsTitle": "Journal publications",
     "forthcoming": "Forthcoming — our first journal submissions are in preparation.",
-    "closeKicker": "Method",
-    "closeTitle": "Build, measure, publish.",
-    "closeBody": "We prototype in public, keep what compounds, and fold the rest back into the next note."
+    "mssKicker": "Manuscripts",
+    "mssTitle": "Manuscripts in progress",
+    "articlesKicker": "Research",
+    "articlesTitle": "Articles"
   },
   "cta": {
     "kicker": "Colophon",

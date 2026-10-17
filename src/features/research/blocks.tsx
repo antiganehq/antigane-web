@@ -48,13 +48,15 @@ export function BlockBody({ blocks }: { blocks: BodyBlock[] }) {
         if (b.type === "heading") {
           const cls =
             b.level === 1
-              ? "font-display text-3xl leading-tight md:text-4xl"
+              ? "mx-auto max-w-2xl font-display text-2xl leading-tight md:text-3xl"
               : b.level === 2
-                ? "font-display text-2xl leading-tight md:text-3xl"
-                : "font-display text-xl leading-tight md:text-2xl";
-          // Literal h1/h2/h3 as authored. Prefer a single h1 per article
-          // since the article title itself is the page h1.
-          const Tag = `h${b.level}` as "h1" | "h2" | "h3";
+                ? "mx-auto max-w-2xl font-display text-xl leading-tight md:text-2xl"
+                : "mx-auto max-w-2xl font-display text-lg leading-tight md:text-xl";
+          // Tags shifted two levels down: the article title owns the page
+          // h1 and section labels (Abstract/Content/References) are h2, so
+          // author-chosen H1 renders as h3, H2 as h4, H3 as h5. Visual
+          // scale stays H1-like per level.
+          const Tag = `h${b.level + 2}` as "h3" | "h4" | "h5";
           return (
             <Tag key={i} className={cls}>
               {renderInline(b.text)}
@@ -64,7 +66,7 @@ export function BlockBody({ blocks }: { blocks: BodyBlock[] }) {
         if (b.type === "image") {
           // Plain <img>: CMS images may be external URLs without known dimensions.
           return (
-            <figure key={i}>
+            <figure key={i} className="mx-auto max-w-4xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={b.src} alt={b.alt ?? ""} loading="lazy" className="h-auto w-full" />
               {b.caption ? (
@@ -76,7 +78,7 @@ export function BlockBody({ blocks }: { blocks: BodyBlock[] }) {
           );
         }
         return (
-          <p key={i} className="max-w-[66ch] text-[1.125rem] leading-[1.6]">
+          <p key={i} className="mx-auto max-w-2xl text-[1.125rem] leading-[1.6]">
             {renderInline(b.text)}
           </p>
         );
