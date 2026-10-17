@@ -5,7 +5,7 @@ import { useEffect, type ReactNode } from "react";
 import { features } from "../lib/config";
 
 const LENIS_OPTIONS = {
-  duration: 1.6,
+  duration: 1.0,
   easing: (t: number): number => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   orientation: "vertical" as const,
   gestureOrientation: "vertical" as const,
@@ -36,11 +36,23 @@ export function SmoothScroll({ children }: { children: ReactNode }): ReactNode {
     function handleAnchorClick(event: MouseEvent): void {
       const target = event.target;
       if (!(target instanceof Element)) return;
-      const anchor = target.closest('a[href^="#"]');
-      if (!anchor) return;
+      const anchor = target.closest('a[href*="#"]');
+      if (!(anchor instanceof HTMLAnchorElement)) return;
       const href = anchor.getAttribute("href");
-      if (!href || href === "#") return;
-      const element = document.querySelector(href);
+      if (!href) return;
+      const hashIndex = href.indexOf("#");
+      if (hashIndex === -1) return;
+      const hash = href.slice(hashIndex);
+      if (!hash || hash === "#") return;
+      // Cross-page hashes belong to the router, not Lenis.
+      const url = new URL(anchor.href, window.location.href);
+      if (url.pathname !== window.location.pathname) return;
+      let element: Element | null = null;
+      try {
+        element = document.querySelector(hash);
+      } catch {
+        return;
+      }
       if (!element || !(element instanceof HTMLElement)) return;
       event.preventDefault();
       lenis.scrollTo(element, { offset: ANCHOR_OFFSET });
