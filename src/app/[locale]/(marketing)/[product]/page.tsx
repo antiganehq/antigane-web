@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -40,6 +40,12 @@ export default async function ProductDetailPage({
   const { locale, product } = await params;
   const meta = getProduct(product);
   if (!meta) notFound();
+
+  // ANT-6 decision: redirect (not registry removal) for orphan /:locale/peridot.
+  // Peridot now lives externally at https://peridot.antigane.com/ (board direction,
+  // ANT-2 parent). Redirect keeps en/id i18n intact and avoids dead links/bookmarks.
+  // Chose `redirect` (307) over `permanentRedirect` (308) so the move stays reversible.
+  if (meta.slug === "peridot") redirect("https://peridot.antigane.com/");
 
   const t = await getTranslations({ locale, namespace: "products" });
   const title = t(`${meta.i18nKey}.title`);
@@ -194,6 +200,29 @@ export default async function ProductDetailPage({
             {others.map((other) => {
               const otherTitle = t(`${other.i18nKey}.title`);
               const otherBody = t(`${other.i18nKey}.body`);
+              // Peridot card links externally (same board direction as showcase row).
+              if (other.slug === "peridot") {
+                return (
+                  <a
+                    key={other.slug}
+                    href="https://peridot.antigane.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t("visit", { title: otherTitle })}
+                    className="focus-ring group block border border-border p-6"
+                  >
+                    <p className="text-[13px] text-muted-foreground">
+                      {t("detail.breadcrumb")}
+                    </p>
+                    <p className="mt-2 font-display text-2xl leading-tight group-hover:underline group-hover:underline-offset-4">
+                      {otherTitle} ↗
+                    </p>
+                    <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                      {otherBody}
+                    </p>
+                  </a>
+                );
+              }
               return (
                 <Link
                   key={other.slug}
