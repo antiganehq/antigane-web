@@ -15,7 +15,9 @@ export const PRODUCTS: ProductMeta[] = [
   {
     slug: "peridot",
     i18nKey: "peridot",
-    url: "https://peridotvault.com",
+    // Board direction (ANT-2/ANT-6): Peridot lives externally at peridot.antigane.com.
+    // The showcase row links out; /:locale/peridot redirects there (see [product]/page.tsx).
+    url: "https://peridot.antigane.com/",
     image: "/products/peridot-horizontal.png",
     verticalImage: "/products/peridot-vertical.png",
     aliases: [],
