@@ -60,17 +60,49 @@
     "heading": "Products Built",
     "subheading": "Under Antigane",
     "visit": "Visit {title} website",
+    "openDetail": "Open {title} details",
     "peridot": {
       "title": "Peridot",
-      "body": "A game distribution platform where players discover, access, and help grow the games they love through a more connected gaming ecosystem."
+      "body": "A game distribution platform where players discover, access, and help grow the games they love through a more connected gaming ecosystem.",
+      "tagline": "Discover, access, and grow the games you love.",
+      "highlights": [
+        "Discover games through a connected catalogue built for players.",
+        "Access your games in one place with a shared player account.",
+        "Help games grow — every play and share feeds the ecosystem."
+      ]
     },
     "peridotId": {
       "title": "Peridot ID",
-      "body": "A unified identity platform giving every product in the Peridot ecosystem one sign-in, shared sessions, and player profiles that follow players everywhere."
+      "body": "A unified identity platform giving every product in the Peridot ecosystem one sign-in, shared sessions, and player profiles that follow players everywhere.",
+      "tagline": "One sign-in for the whole Peridot ecosystem.",
+      "highlights": [
+        "One sign-in across every Peridot product — no repeated logins.",
+        "Shared sessions that keep players signed in everywhere.",
+        "Player profiles that follow players from game to game."
+      ]
     },
     "live2dev": {
       "title": "Live2dev",
-      "body": "A game campaign marketplace that connects game developers with streamers to promote and grow their games."
+      "body": "A game campaign marketplace that connects game developers with streamers to promote and grow their games.",
+      "tagline": "Where developers and streamers grow games together.",
+      "highlights": [
+        "Campaigns that match game developers with the right streamers.",
+        "Live promotion with trackable plays, installs, and growth.",
+        "Payouts and reporting both sides can trust."
+      ]
+    },
+    "detail": {
+      "breadcrumb": "Products",
+      "overviewKicker": "Overview",
+      "highlightsKicker": "Highlights",
+      "highlightsTitle": "Why it matters",
+      "ecosystemKicker": "Ecosystem",
+      "ecosystemTitle": "One ecosystem, many surfaces",
+      "ecosystemBody": "Each product ships on its own site, but shares the same Antigane account, design, and research backbone.",
+      "visitSite": "Visit live site",
+      "backToProducts": "All products",
+      "moreTitle": "Keep exploring",
+      "websiteLabel": "Website"
     }
   },
   "research": {
