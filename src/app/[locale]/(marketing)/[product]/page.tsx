@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { createMetadata } from "@/shared/lib/metadata";
+import { PRODUCT_URLS } from "@/shared/lib/peridot-domains";
 import { PRODUCTS, getOtherProducts, getProduct } from "@/features/products/data";
 
 export function generateStaticParams() {
@@ -42,10 +43,11 @@ export default async function ProductDetailPage({
   if (!meta) notFound();
 
   // ANT-6 decision: redirect (not registry removal) for orphan /:locale/peridot.
-  // Peridot now lives externally at https://peridot.antigane.com/ (board direction,
-  // ANT-2 parent). Redirect keeps en/id i18n intact and avoids dead links/bookmarks.
+  // ANT-99/ANT-117: Peridot now resolves to the new dashboard host
+  // (https://dashboard.peridot.id); legacy https://peridot.antigane.com/
+  // stays live (dual-serve). Redirect keeps en/id i18n intact.
   // Chose `redirect` (307) over `permanentRedirect` (308) so the move stays reversible.
-  if (meta.slug === "peridot") redirect("https://peridot.antigane.com/");
+  if (meta.slug === "peridot") redirect(PRODUCT_URLS.peridot);
 
   const t = await getTranslations({ locale, namespace: "products" });
   const title = t(`${meta.i18nKey}.title`);
@@ -205,7 +207,7 @@ export default async function ProductDetailPage({
                 return (
                   <a
                     key={other.slug}
-                    href="https://peridot.antigane.com/"
+                    href={PRODUCT_URLS.peridot}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t("visit", { title: otherTitle })}

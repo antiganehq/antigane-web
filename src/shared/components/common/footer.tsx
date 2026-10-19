@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { PRODUCT_URLS } from "@/shared/lib/peridot-domains";
 
 type LinkColumn = {
   label: string;
@@ -25,10 +26,12 @@ export async function Footer(): Promise<ReactNode> {
     {
       label: t("products"),
       items: [
-        { label: pt("peridot.title"), href: "https://peridotvault.com" },
+        // ANT-99/ANT-117: primary links target the new peridot.id hosts;
+        // legacy https://peridotvault.com + https://pid.peridotvault.com stay live.
+        { label: pt("peridot.title"), href: PRODUCT_URLS.peridot },
         {
           label: pt("peridotId.title"),
-          href: "https://pid.peridotvault.com",
+          href: PRODUCT_URLS.peridotId,
         },
         { label: pt("live2dev.title"), href: "https://live2dev.com" },
       ],

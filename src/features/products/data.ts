@@ -1,3 +1,5 @@
+import { PRODUCT_URLS } from "@/shared/lib/peridot-domains";
+
 export type ProductSlug = "peridot" | "peridot-id" | "live2dev";
 
 export interface ProductMeta {
@@ -15,9 +17,12 @@ export const PRODUCTS: ProductMeta[] = [
   {
     slug: "peridot",
     i18nKey: "peridot",
-    // Board direction (ANT-2/ANT-6): Peridot lives externally at peridot.antigane.com.
+    // ANT-99/ANT-117: primary is the new dashboard host
+    // (https://dashboard.peridot.id, sandbox: https://sandbox.dashboard.peridot.id).
+    // Legacy https://peridot.antigane.com (+ https://peridotvault.com) stays
+    // live (dual-serve, no hard cutover) — see LEGACY_HOSTS.
     // The showcase row links out; /:locale/peridot redirects there (see [product]/page.tsx).
-    url: "https://peridot.antigane.com/",
+    url: PRODUCT_URLS.peridot,
     image: "/products/peridot-horizontal.png",
     verticalImage: "/products/peridot-vertical.png",
     aliases: [],
@@ -25,7 +30,10 @@ export const PRODUCTS: ProductMeta[] = [
   {
     slug: "peridot-id",
     i18nKey: "peridotId",
-    url: "https://pid.peridotvault.com",
+    // ANT-99/ANT-117: wallet primary is https://peridot.id
+    // (sandbox: https://sandbox.peridot.id). Legacy
+    // https://pid.peridotvault.com (+ app.pid.peridotvault.com) stays live.
+    url: PRODUCT_URLS.peridotId,
     image: "/products/peridotid-horizontal.png",
     verticalImage: "/products/peridotid-vertical.png",
     aliases: ["peridot_id", "peridotid", "peridot-id", "pid"],
