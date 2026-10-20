@@ -3,9 +3,10 @@ import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import { PRODUCTS } from "@/features/products/data";
+import { PRODUCT_URLS } from "@/shared/lib/peridot-domains";
 
-/** Board direction (ANT-2): Peridot lives at https://peridot.antigane.com/ — row links out, no internal detail. */
-const PERIDOT_EXTERNAL_URL = "https://peridot.antigane.com/";
+/** ANT-99/ANT-117: Peridot links out to the new dashboard host (dual-serve — legacy stays live). */
+const PERIDOT_EXTERNAL_URL = PRODUCT_URLS.peridot;
 
 export async function Showcase(): Promise<ReactNode> {
   const t = await getTranslations("products");
