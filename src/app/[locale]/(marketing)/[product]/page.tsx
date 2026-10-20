@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -41,6 +41,13 @@ export default async function ProductDetailPage({
   const { locale, product } = await params;
   const meta = getProduct(product);
   if (!meta) notFound();
+
+  // ANT-163: alias slugs (e.g. pre-rename /:locale/peridot-id) 308 to the
+  // canonical slug (/:locale/identity). Brand copy is untouched - this only
+  // normalizes the URL. `permanentRedirect` emits 308 (cached permanently);
+  // the next.config.ts redirect below is the edge-level equivalent.
+  if (product.toLowerCase() !== meta.slug)
+    permanentRedirect(`/${locale}/${meta.slug}`);
 
   // ANT-6 decision: redirect (not registry removal) for orphan /:locale/peridot.
   // ANT-99/ANT-117: Peridot now resolves to the new dashboard host
