@@ -1,6 +1,6 @@
 import { PRODUCT_URLS } from "@/shared/lib/peridot-domains";
 
-export type ProductSlug = "peridot" | "identity" | "live2dev";
+export type ProductSlug = "peridot" | "peridot-id" | "live2dev";
 
 export interface ProductMeta {
   slug: ProductSlug;
@@ -9,8 +9,7 @@ export interface ProductMeta {
   url: string;
   image: string;
   verticalImage: string;
-  /** Legacy / alternate slugs that resolve to the canonical slug
-   * (non-canonical hits 308 to canonical — see [product]/page.tsx). */
+  /** Legacy / alternate slugs that should resolve to the canonical slug. */
   aliases: string[];
 }
 
@@ -29,11 +28,7 @@ export const PRODUCTS: ProductMeta[] = [
     aliases: [],
   },
   {
-    // ANT-163: canonical route is /:locale/identity. The PeridotID /
-    // Peridot ID brand copy (i18n key `peridotId`) is unchanged — only the
-    // URL slug moved. Old /:locale/peridot-id URLs 308 to canonical
-    // (aliases below + redirect in [product]/page.tsx and next.config.ts).
-    slug: "identity",
+    slug: "peridot-id",
     i18nKey: "peridotId",
     // ANT-99/ANT-117: wallet primary is https://peridot.id
     // (sandbox: https://sandbox.peridot.id). Legacy
@@ -41,7 +36,7 @@ export const PRODUCTS: ProductMeta[] = [
     url: PRODUCT_URLS.peridotId,
     image: "/products/peridotid-horizontal.png",
     verticalImage: "/products/peridotid-vertical.png",
-    aliases: ["peridot_id", "peridotid", "peridot-id", "pid"], // "peridot-id" = pre-ANT-163 route
+    aliases: ["peridot_id", "peridotid", "peridot-id", "pid"],
   },
   {
     slug: "live2dev",
