@@ -1,14 +1,7 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
-import { THEME_STORAGE_KEY, type Theme } from "@/shared/lib/theme-script";
+import { createContext, useContext, useMemo, type ReactNode } from "react";
+import type { Theme } from "@/shared/lib/theme-script";
 
 type ThemeContextValue = {
   theme: Theme;
@@ -22,48 +15,16 @@ const ThemeContext = createContext<ThemeContextValue>({
   setTheme: () => {},
 });
 
-// Static theme: dark everywhere unless explicitly stored as light.
-// The device color-scheme preference is intentionally ignored.
-function applyTheme(theme: Theme): "light" | "dark" {
-  const resolved = theme;
-  const root = document.documentElement;
-  root.classList.toggle("dark", resolved === "dark");
-  root.style.colorScheme = resolved;
-  return resolved;
-}
-
+// Static theme: always dark. Research stays light via the `.theme-light`
+// scope in its layout. setTheme is a no-op kept for existing consumers.
 export function ThemeProvider({ children }: { children: ReactNode }): ReactNode {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof document === "undefined") return "dark";
-    try {
-      const stored = localStorage.getItem(THEME_STORAGE_KEY);
-      if (stored === "light") return "light";
-    } catch {
-      return "dark";
-    }
-    return "dark";
-  });
-
-  const resolvedTheme: "light" | "dark" = theme;
-
-  useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
-
   const value = useMemo<ThemeContextValue>(
     () => ({
-      theme,
-      resolvedTheme,
-      setTheme: (next) => {
-        setThemeState(next);
-        try {
-          localStorage.setItem(THEME_STORAGE_KEY, next);
-        } catch {
-          // localStorage unavailable (e.g. private mode)
-        }
-      },
+      theme: "dark",
+      resolvedTheme: "dark",
+      setTheme: () => {},
     }),
-    [theme, resolvedTheme]
+    [],
   );
 
   return (

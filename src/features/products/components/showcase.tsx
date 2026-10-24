@@ -1,12 +1,7 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
-import { Link } from "@/i18n/navigation";
 import { PRODUCTS } from "@/features/products/data";
-import { PRODUCT_URLS } from "@/shared/lib/peridot-domains";
-
-/** ANT-99/ANT-117: Peridot links out to the new dashboard host (dual-serve — legacy stays live). */
-const PERIDOT_EXTERNAL_URL = PRODUCT_URLS.peridot;
 
 export async function Showcase(): Promise<ReactNode> {
   const t = await getTranslations("products");
@@ -28,32 +23,20 @@ export async function Showcase(): Promise<ReactNode> {
           const no = String(idx + 1).padStart(2, "0");
           const title = t(`${item.i18nKey}.title`);
           const body = t(`${item.i18nKey}.body`);
-          const host = item.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
-          const isPeridotExternal = item.slug === "peridot";
           return (
             <article
               key={item.slug}
               className="group relative transition-colors duration-200 hover:bg-muted/50"
             >
-              {isPeridotExternal ? (
-                <a
-                  href={PERIDOT_EXTERNAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={t("visit", { title })}
-                  className="focus-ring absolute inset-0 z-0"
-                >
-                  <span className="sr-only">{t("visit", { title })}</span>
-                </a>
-              ) : (
-                <Link
-                  href={`/${item.slug}`}
-                  aria-label={t("openDetail", { title })}
-                  className="focus-ring absolute inset-0 z-0"
-                >
-                  <span className="sr-only">{t("openDetail", { title })}</span>
-                </Link>
-              )}
+              <a
+                href={item.detailUrl ?? item.appUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t("visit", { title })}
+                className="focus-ring absolute inset-0 z-0"
+              >
+                <span className="sr-only">{t("visit", { title })}</span>
+              </a>
               <div className="mx-auto grid max-w-[1280px] grid-cols-12 items-start gap-x-6 gap-y-6 px-6 py-10 md:gap-x-8 md:px-10">
                 <div className="pointer-events-none col-span-12 md:col-start-1 md:col-span-6">
                   <p className="tnum text-sm text-muted-foreground">{no}</p>
@@ -65,15 +48,26 @@ export async function Showcase(): Promise<ReactNode> {
                   <p className="mt-4 max-w-[66ch] text-base leading-relaxed text-muted-foreground">
                     {body}
                   </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                  <div className="mt-4 flex flex-wrap items-center gap-3">
+                    {item.detailUrl ? (
+                      <a
+                        href={item.detailUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={t("visit", { title })}
+                        className="focus-ring pointer-events-auto relative z-10 inline-block rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background hover:opacity-90"
+                      >
+                        {t("viewDetail")} ↗
+                      </a>
+                    ) : null}
                     <a
-                      href={item.url}
+                      href={item.appUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={t("visit", { title })}
-                      className="pointer-events-auto relative z-10 inline-block text-sm text-muted-foreground underline underline-offset-4 decoration-1 hover:text-foreground"
+                      className="focus-ring pointer-events-auto relative z-10 inline-block rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background hover:opacity-90"
                     >
-                      {host} ↗
+                      {t("goToApp")} ↗
                     </a>
                   </div>
                 </div>

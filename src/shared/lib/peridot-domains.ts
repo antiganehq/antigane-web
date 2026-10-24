@@ -84,14 +84,26 @@ export const peridotUrls = {
   },
 };
 
-/** Product → domain mapping used by showcase / detail / footer. */
+/** Product → URL mapping used by showcase / detail / footer. */
 export const PRODUCT_URLS = {
-  /** Peridot ID = wallet surface. */
+  /** Peridot ID detail = identity surface on the Peridot site (no internal detail page). */
   get peridotId(): string {
+    return "https://peridot.antigane.com/identity";
+  },
+  /** Peridot ID app = wallet host. */
+  get peridotIdApp(): string {
     return peridotUrls.wallet;
   },
   /** Peridot distribution surface = dashboard host (see assumption above). */
   get peridot(): string {
     return peridotUrls.dashboard;
+  },
+  /** Peridot detail page on the Peridot site. */
+  get peridotSite(): string {
+    return "https://peridot.antigane.com";
+  },
+  /** Peridot app = legacy product host. */
+  get peridotApp(): string {
+    return "https://peridotvault.com";
   },
 };

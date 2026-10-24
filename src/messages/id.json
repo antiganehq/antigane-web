@@ -60,49 +60,19 @@
     "heading": "Produk Dibangun",
     "subheading": "di Bawah Antigane",
     "visit": "Kunjungi situs {title}",
-    "openDetail": "Buka detail {title}",
+    "viewDetail": "Lihat Detail",
+    "goToApp": "Buka Aplikasi",
     "peridot": {
       "title": "Peridot",
-      "body": "Platform distribusi game tempat pemain menemukan, mengakses, dan membantu mengembangkan game favorit mereka melalui ekosistem game yang lebih terhubung.",
-      "tagline": "Temukan, akses, dan kembangkan game favoritmu.",
-      "highlights": [
-        "Temukan game lewat katalog terhubung yang dibuat untuk pemain.",
-        "Akses semua gamemu di satu tempat dengan satu akun pemain.",
-        "Bantu game bertumbuh — setiap permainan dan bagikan memperkuat ekosistem."
-      ]
+      "body": "Platform distribusi game tempat pemain menemukan, mengakses, dan membantu mengembangkan game favorit mereka melalui ekosistem game yang lebih terhubung."
     },
     "peridotId": {
       "title": "Peridot ID",
-      "body": "Platform identitas terpadu yang memberi setiap produk di ekosistem Peridot satu proses masuk, sesi bersama, dan profil pemain yang mengikuti pemain ke mana pun.",
-      "tagline": "Satu kali masuk untuk seluruh ekosistem Peridot.",
-      "highlights": [
-        "Satu kali masuk untuk semua produk Peridot — tanpa login berulang.",
-        "Sesi bersama yang membuat pemain tetap masuk di mana pun.",
-        "Profil pemain yang mengikuti pemain dari game ke game."
-      ]
+      "body": "Platform identitas terpadu yang memberi setiap produk di ekosistem Peridot satu proses masuk, sesi bersama, dan profil pemain yang mengikuti pemain ke mana pun."
     },
     "live2dev": {
       "title": "Live2dev",
-      "body": "Marketplace kampanye game yang menghubungkan developer game dengan streamer untuk mempromosikan dan mengembangkan game mereka.",
-      "tagline": "Tempat developer dan streamer menumbuhkan game bersama.",
-      "highlights": [
-        "Kampanye yang mempertemukan developer dengan streamer yang tepat.",
-        "Promosi live dengan permainan, instal, dan pertumbuhan yang terlacak.",
-        "Pembayaran dan laporan yang dipercaya kedua belah pihak."
-      ]
-    },
-    "detail": {
-      "breadcrumb": "Produk",
-      "overviewKicker": "Ringkasan",
-      "highlightsKicker": "Sorotan",
-      "highlightsTitle": "Mengapa penting",
-      "ecosystemKicker": "Ekosistem",
-      "ecosystemTitle": "Satu ekosistem, banyak permukaan",
-      "ecosystemBody": "Setiap produk berjalan di situsnya sendiri, tetapi memakai akun, desain, dan riset Antigane yang sama.",
-      "visitSite": "Kunjungi situs live",
-      "backToProducts": "Semua produk",
-      "moreTitle": "Jelajahi lainnya",
-      "websiteLabel": "Situs web"
+      "body": "Marketplace kampanye game yang menghubungkan developer game dengan streamer untuk mempromosikan dan mengembangkan game mereka."
     }
   },
   "cta": {
